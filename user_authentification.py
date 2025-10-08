@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import streamlit as st
 
 def login_page():
@@ -17,3 +18,7 @@ def login_page():
 
         email = st.text_input("Enter your EMail address")
         st.button("Create Account")
+=======
+import streamlit_authenticator as stauth
+
+>>>>>>> Stashed changes
