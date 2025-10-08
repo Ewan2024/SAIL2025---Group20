@@ -37,9 +37,6 @@ def main():
     show_sensor_labels = st.sidebar.checkbox("Show Sensor ID", value = False )
     show_sensor_data = st.sidebar.checkbox("Show Sensor Data", value = True)
 
-
-    
-
     # Initialize map 
     m = init_map(map_style)
 
