@@ -20,6 +20,8 @@ def main():
     st.title("SAIL 2025 Crowd Monitoring Dashboard")
 
     # Sidebar Controls
+    st.sidebar.title("Navigation")
+    
     map_style = st.sidebar.selectbox(
         "Map Style",
         [
@@ -33,6 +35,8 @@ def main():
     show_sensor_loc = st.sidebar.checkbox("Show Sensor Locations", value=True)
     show_sensor_labels = st.sidebar.checkbox("Show Sensor ID", value = False )
     show_sensor_data = st.sidebar.checkbox("Show Sensor Data", value = True)
+
+    
 
     # Initialize map 
     m = init_map(map_style)
