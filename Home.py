@@ -18,6 +18,10 @@ sensor_data = load_sensor_data()
 # Initialize default session state (if not set yet)
 default_settings = {
     "map_style": "OpenStreetMap",
+    "show_sensor_arrows": True,
+    "show_sensor_loc": True,
+    "show_sensor_labels": False,
+    "show_sensor_data": True
 }
 for key, value in default_settings.items():
     if key not in st.session_state:
