@@ -4,7 +4,7 @@ import hashlib
 import pickle 
 
 #path to pkl file used for user data (username and passoword) storage
-user_database = "hashed_pw.pkl"
+user_database = "user_database.pkl"
 
 #hash the password for increased data security
 def hash_passwords(password):
