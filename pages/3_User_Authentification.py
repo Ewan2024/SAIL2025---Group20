@@ -17,3 +17,5 @@ def login_page():
 
         email = st.text_input("Enter your EMail address")
         st.button("Create Account")
+
+login_page()
