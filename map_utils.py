@@ -175,3 +175,18 @@ def add_sensor_arrows(m, sensor_loc, sensor_data):
     # Warning for skipped rows
     if missing_rows:
         st.warning(f"Skipped {len(missing_rows)} row(s) due to missing or invalid data: {missing_rows}")
+
+def add_stops_circles(m, tram_metro_gdf):
+    tram_metro_stop_group = folium.FeatureGroup(name="Tram/Metro Stops", show=True)
+    for _, row in tram_metro_gdf.iterrows():
+        lon, lat = row.geometry.coords[0]  # geometry is Point(lat, lon)
+        popup_text = f"<b>{row['Naam']}</b><br>Type: {row['Modaliteit']}<br>Lijnen: {row['Lijn']}"
+        folium.CircleMarker(
+            location=[lon, lat],
+            radius=5,
+            color="blue" if row["Modaliteit"] == "Tram" else "red",
+            fill=True,
+            fill_opacity=0.8,
+            popup=popup_text
+        ).add_to(tram_metro_stop_group)
+    tram_metro_stop_group.add_to(m)
