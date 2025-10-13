@@ -1,8 +1,8 @@
 # Import necessary libraries
 import streamlit as st
 from streamlit_folium import st_folium
-from data_loader import load_sensor_data, load_sensor_locations
-from map_utils import init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_sensor_arrows
+from data_loader import load_sensor_data, load_sensor_locations, load_tram_metro_data
+from map_utils import init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_sensor_arrows, add_stops_circles
 
 #  Configure Streamlit page 
 st.set_page_config(
@@ -14,6 +14,7 @@ st.set_page_config(
 # Load Data 
 sensor_loc = load_sensor_locations()
 sensor_data = load_sensor_data()
+tram_metro_stops_gpd = load_tram_metro_data()
 
 # Initialize default session state (if not set yet)
 default_settings = {
@@ -21,7 +22,8 @@ default_settings = {
     "show_sensor_arrows": True,
     "show_sensor_loc": True,
     "show_sensor_labels": False,
-    "show_sensor_data": True
+    "show_sensor_data": True,
+    "show_tram_metro_stops": False
 }
 for key, value in default_settings.items():
     if key not in st.session_state:
@@ -68,6 +70,9 @@ def main():
     st.session_state.show_sensor_data = st.sidebar.checkbox(
         "Show sensor data", value=st.session_state.show_sensor_data
     )
+    st.session_state.show_tram_metro_stops = st.sidebar.checkbox(
+        "Show Tram & Metro Stops", value =st.session_state.show_tram_metro_stops
+    )
 
     # Initialize map 
     m = init_map(map_style)
@@ -81,6 +86,8 @@ def main():
         add_sensor_circles(m, sensor_loc, sensor_data)
     if st.session_state.show_sensor_arrows:
         add_sensor_arrows(m, sensor_loc, sensor_data)
+    if st.session_state.show_tram_metro_stops:
+        add_stops_circles(m, tram_metro_stops_gpd)
     
     # Display map 
     st_data = st_folium(m, width=1000, height=600)
