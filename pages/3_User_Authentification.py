@@ -1,10 +1,11 @@
 #imports
 import streamlit as st
 import hashlib 
-import pickle 
+import pickle
+import os
 
 #path to pkl file used for user data (username and passoword) storage
-user_database = "user_database.pkl"
+user_database = "data/user_database.pkl"
 
 #hash the password for increased data security
 def hash_passwords(password):
@@ -13,6 +14,10 @@ def hash_passwords(password):
 
 #load user data from the pickle file
 def load_user_data():
+    # Return empty dictionary with "usernames" key if the database is empty or the file is non-existent
+    if not os.path.exists(user_database) or os.path.getsize(user_database) == 0:
+        return {"usernames": {}}
+
     with open(user_database, "rb") as file:
         return pickle.load(file)
     
