@@ -36,4 +36,6 @@ filtered_sensors = sensor_data_long[sensor_data_long["sensor_id"].isin(selected_
 fig = px.line(filtered_sensors, x="timestamp", y="flow_count", color="sensor_id", title="Crowd Flow")
 fig.show()
 
-st.plotly_chart(fig)
+fig.update_layout(xaxis_title="Time", yaxis_title="Crowd Flow", legend_title="Sensor Names")
+
+st.plotly_chart(fig, use_container_width=True)
