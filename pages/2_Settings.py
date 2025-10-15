@@ -18,7 +18,8 @@ default_settings = {
     "show_sensor_loc": True,
     "show_sensor_labels": False,
     "show_sensor_data": True,
-    "show_tram_metro_stops": False
+    "show_tram_metro_stops": False,
+    "show_heatmap": False
 }
 
 for key, value in default_settings.items():
@@ -49,6 +50,7 @@ with st.form("settings_form"):
     show_sensor_labels = st.checkbox("Show sensor IDs (labels)", st.session_state.show_sensor_labels)
     show_sensor_data = st.checkbox("Show sensor data (circles)", st.session_state.show_sensor_data)
     show_tram_metro_stops = st.checkbox("Show Tram & Metro Stops (circles)", st.session_state.show_tram_metro_stops)
+    show_heatmap = st.checkbox("Show heatmap", st.session_state.show_heatmap)
 
     submitted = st.form_submit_button("Save Settings")
 
@@ -59,5 +61,6 @@ with st.form("settings_form"):
         st.session_state.show_sensor_labels = show_sensor_labels
         st.session_state.show_sensor_data = show_sensor_data
         st.session_state.show_tram_metro_stops = show_tram_metro_stops
+        st.session_state.show_heatmap = show_heatmap
 
         st.success("Settings saved successfully! Go back to the Home page to view changes.")
