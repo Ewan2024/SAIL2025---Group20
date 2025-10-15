@@ -1,5 +1,7 @@
 import folium
 import streamlit as st
+import folium.plugins
+from folium.plugins import HeatMap
 
 # Initialise map
 def init_map(map_style):
@@ -190,3 +192,23 @@ def add_stops_circles(m, tram_metro_gdf):
             popup=popup_text
         ).add_to(tram_metro_stop_group)
     tram_metro_stop_group.add_to(m)
+
+def add_heatmap(m, sensor_loc, sensor_data):
+    heat_data = []
+    missing_rows = []  
+    for i, row in sensor_loc.iterrows():
+        if row[['Lat', 'Lon', 'Locatienaam', 'Objectummer']].isnull().any():
+            missing_rows.append(i)
+            continue 
+
+        sensor_id = row['sensor_id_full']
+        sensor_count = sensor_data.get(sensor_id, [0])[0] 
+
+        if sensor_count > 0:
+            heat_data.append([float(row['Lat']), float(row['Lon']), float(sensor_count)])
+
+    if heat_data:
+        HeatMap(heat_data, radius=15, blur=10, max_zoom=1).add_to(m)
+
+    if missing_rows:
+        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
