@@ -1,3 +1,9 @@
 pip install streamlit-folium
 pip install streamlit-autorefresh
 pip install fastparquet
+pip install scikit-learn
+pip install xgboost 
+pip install lightgbm 
+pip install seaborn
+pip install tensorflow
+pip install joblit
