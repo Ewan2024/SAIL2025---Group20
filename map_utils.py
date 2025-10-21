@@ -3,44 +3,45 @@ import streamlit as st
 import folium.plugins
 from folium.plugins import HeatMap
 
-# Initialise map
-def init_map(map_style):
+
+def init_map(map_style, center, zoom):
+    """Initializes the map with a given center, zoom, and style."""
+
+    if isinstance(center, dict): 
+        location = [center['lat'], center['lng']]
+    else:
+        location = center
+
     m = folium.Map(
-        location=[52.3791, 4.9003],  # Centered on Amsterdam
-        zoom_start=13,
-        tiles=None # disable default tiles so we can add custom layers
+        location=location, 
+        zoom_start=zoom,
+        tiles=None,
+        control_scale=True
     )
     # --- Add selected tile layer ---
     if map_style == "Esri Satellite":
         folium.TileLayer(
             tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-            attr="Esri",
-            name="Esri Satellite",
-            overlay=False,
-            control=True
+            attr="Esri", name="Esri Satellite", overlay=False, control=True
         ).add_to(m)
     elif map_style == "Google Satellite":
         folium.TileLayer(
             tiles="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
-            attr="Google",
-            name="Google Satellite",
-            overlay=False,
-            control=True
+            attr="Google", name="Google Satellite", overlay=False, control=True
         ).add_to(m)
     else:
-        # For OpenStreetMap or CartoDB styles
         folium.TileLayer(map_style).add_to(m)
+    
     return m
 
-# Add sensor markers if toggled 
+# Add sensor markers if turned on
 def add_sensor_markers(m, sensor_loc):      
     missing_rows = [] # List to store rows with missing data
     for idx, row in sensor_loc.iterrows():
         # check if any critical column is missing
         if row[['Lat', 'Lon','Locatienaam','Objectummer']].isnull().any():
             missing_rows.append(idx)
-            continue # skip this row
-        # add marker if no missing value
+            continue 
         folium.Marker(
             location=[row['Lat'], row['Lon']],
             popup=f"{row['Locatienaam']} ({row['Objectummer']})",
@@ -51,9 +52,8 @@ def add_sensor_markers(m, sensor_loc):
                 prefix='fa'
             )
         ).add_to(m)
-    # Display missing rows info on Streamlit ---
     if missing_rows:
-        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
+        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}") #to announce to user if there is data
 
 # Add sensor labels
 def add_sensor_labels(m, sensor_loc):
