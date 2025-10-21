@@ -34,14 +34,14 @@ def init_data_stream():
     """
     if 'full_sensor_data' not in st.session_state:
         try:
-            df = pd.read_csv('data/sensor_data.csv', 
+            df = pd.read_csv('data/crowd_weather_merged.csv', 
                              index_col='timestamp', 
                              parse_dates=True)
             st.session_state.full_sensor_data = df
             st.session_state.data_index = 0
             print("Data stream initialized.")
         except FileNotFoundError:
-            st.error("Error: The main data file 'data/SAIL2025...flow.csv' was not found.")
+            st.error("Error: The main data file 'data/crowd_weather_merged.csv' was not found.")
             st.stop()
 
 # Load sensor locations
