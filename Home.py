@@ -1,7 +1,8 @@
 import streamlit as st
 from streamlit_folium import st_folium
-import time
+import time #to work with the time in the dataset
 from streamlit_autorefresh import st_autorefresh #allows the auto refresh of the dashbaord
+from streamlit_js_eval import streamlit_js_eval
 from data_loader import (load_live_sensor_data, load_sensor_locations, load_tram_metro_data, init_data_stream)
 from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_sensor_arrows, add_stops_circles, add_heatmap)
 
@@ -11,26 +12,26 @@ st.set_page_config(
     page_icon="📍"
 )
 
-REFRESH_INTERVAL = 180  # 180 seconds, this will be changed to seconds later in the code. As otherwise, this would have too many '0's'
+REFRESH_INTERVAL = 5  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
 
 # 1. Initialize session state on the first run
-if 'last_refresh' not in st.session_state:
-    print("First run: Initializing session state...")
+if "last_refresh" not in st.session_state:
     init_data_stream()
     st.session_state.last_refresh = 0.0
     st.session_state.sensor_data = {}
     st.session_state.current_timestamp = time.time()
-    
     st.session_state.map_center = [52.37, 4.89] # Amsterdam, this is for the first time loading the map.
     st.session_state.map_zoom = 13 # Default zoom when loading the map for the first time
 
 def main():
+    if "scroll_position" in st.session_state:
+        streamlit_js_eval(f"window.scrollTo(0, {st.session_state.scroll_position});")
+
     # 2. Auto refresh  
-    st_autorefresh(interval=REFRESH_INTERVAL * 1000, key="auto_refresher") #take time and convert to seconds
+    st_autorefresh(interval=REFRESH_INTERVAL * 1000, key="auto_refresher") #take time from refresh interval and convert to milliseconds
 
     # Refresh data if the time interval has passed (3 minutes)
     if time.time() - st.session_state.last_refresh > REFRESH_INTERVAL:
-        print(f"Timer elapsed. Refreshing data at {time.strftime('%X')}")
         sensor_data, timestamp = load_live_sensor_data()
         st.session_state.sensor_data = sensor_data
         st.session_state.current_timestamp = timestamp
@@ -80,6 +81,8 @@ def main():
     display_time = current_timestamp if hasattr(current_timestamp, 'strftime') else st.session_state.current_timestamp
     st.header(f"Showing Data for: {display_time.strftime('%Y-%m-%d %H:%M:%S')}") #tells you what time the data is being shown
     st.caption(f"Next automatic data refresh in {int(max(0, time_left))} seconds.") #in how long the bashboard will refresh - this updates whenn you click on the page. Could not make this happen automatically
+
+    st.session_state.scroll_position = streamlit_js_eval("return window.scrollY", key="get_scroll_position")
 
 if __name__ == "__main__":
     main()
