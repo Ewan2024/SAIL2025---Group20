@@ -6,6 +6,14 @@ from streamlit_js_eval import streamlit_js_eval
 from data_loader import (load_live_sensor_data, load_sensor_locations, load_tram_metro_data, init_data_stream)
 from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_sensor_arrows, add_stops_circles, add_heatmap)
 
+#Import function used for login - only activate upon final implementation
+#from pages.C_User_Authentification import load_user_data
+#from pages.C_User_Authentification import save_user_data
+#from pages.C_User_Authentification import hash_passwords
+#from pages.C_User_Authentification import authenticate_user
+#from pages.C_User_Authentification import login_page
+
+
 st.set_page_config(
     page_title="SAIL 2025 Crowd Monitoring Dashboard",
     layout="wide",
@@ -22,6 +30,12 @@ if "last_refresh" not in st.session_state:
     st.session_state.current_timestamp = time.time()
     st.session_state.map_center = [52.37, 4.89] # Amsterdam, this is for the first time loading the map.
     st.session_state.map_zoom = 13 # Default zoom when loading the map for the first time
+
+# Add authentication session state initialization - only activate upon full implementation
+#if 'logged_in' not in st.session_state:
+    #st.session_state['logged_in'] = False
+#if 'username' not in st.session_state:
+    #st.session_state['username'] = None
 
 def main():
     if "scroll_position" in st.session_state:
@@ -86,3 +100,13 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    #Below is the code that adds the login functionality as a landing page - only activate upon final implementation
+    #if st.session_state['logged_in']:
+        # Forward user to main dashboard (main()) if logged in 
+        #st.sidebar.button("Logout", on_click=lambda: st.session_state.update(logged_in=False, username=None))
+        #main()
+    #else:
+        # Forward user to Login/ Signup page if not logged in
+        #st.set_page_config(page_title="Login Page", layout="wide", initial_sidebar_state="collapsed")
+        #login_page()

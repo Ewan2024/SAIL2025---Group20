@@ -1,5 +1,9 @@
 import streamlit as st
 
+#check whether user is logged in. Only then the page is loaded - only activate upon final implementation
+#from security import check_login_status 
+#check_login_status()
+
 # Configure streamlit page
 st.set_page_config(
     page_title = "Settings - SAIL 2025 Dashboard",

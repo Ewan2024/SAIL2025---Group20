@@ -60,11 +60,12 @@ def login_page():
 
             authentication_state = authenticate_user(login_username, login_password, user_data)
 
-            if authentication_state == True:
-                st.success(f"Welcome back {login_username} !")
+            if authentication_state == True: #added for final implementation
+                st.session_state['logged_in'] = True
+                st.session_state['username'] = login_username # Store username for display/future use
             
             else: #In case username is not found in database
-                st.error("Invalid Username or Password.")
+                st.error("Invalid Credentials. Please retry or sing up if you have never logged in before.")
 
 
     else: #if sign up is selceted...
