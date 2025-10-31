@@ -1,0 +1,241 @@
+Date,Time,Temperature,Dew Point,Humidity,Wind,Wind Speed,Wind Gust,Pressure,Precip.,Condition
+20/8/25,12:25 AM,63Ê¡F,55Ê¡F,77Ê%,N,8Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,12:55 AM,63Ê¡F,55Ê¡F,77Ê%,NNE,12Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,1:25 AM,63Ê¡F,55Ê¡F,77Ê%,N,10Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,1:55 AM,63Ê¡F,55Ê¡F,77Ê%,NNE,9Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,2:25 AM,63Ê¡F,55Ê¡F,77Ê%,NNE,6Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,2:55 AM,63Ê¡F,55Ê¡F,77Ê%,NNE,7Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,3:25 AM,63Ê¡F,55Ê¡F,77Ê%,NNE,7Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,3:55 AM,63Ê¡F,55Ê¡F,77Ê%,NNE,8Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,4:25 AM,63Ê¡F,55Ê¡F,77Ê%,N,7Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,4:55 AM,63Ê¡F,55Ê¡F,77Ê%,NNE,7Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,5:25 AM,63Ê¡F,54Ê¡F,72Ê%,N,9Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,5:55 AM,63Ê¡F,54Ê¡F,72Ê%,N,10Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,6:25 AM,63Ê¡F,52Ê¡F,68Ê%,N,10Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,6:55 AM,63Ê¡F,52Ê¡F,68Ê%,N,8Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,7:25 AM,63Ê¡F,52Ê¡F,68Ê%,N,9Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,7:55 AM,61Ê¡F,54Ê¡F,77Ê%,NNW,7Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,8:25 AM,63Ê¡F,54Ê¡F,72Ê%,NNW,7Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,8:55 AM,63Ê¡F,52Ê¡F,68Ê%,N,8Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,9:25 AM,64Ê¡F,52Ê¡F,64Ê%,N,8Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,9:55 AM,64Ê¡F,52Ê¡F,64Ê%,N,9Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,10:25 AM,64Ê¡F,52Ê¡F,64Ê%,N,9Êmph,0Êmph,29.96Êin,0.0Êin,Partly Cloudy
+20/8/25,10:55 AM,66Ê¡F,52Ê¡F,60Ê%,NNE,8Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,11:25 AM,66Ê¡F,52Ê¡F,60Ê%,N,10Êmph,0Êmph,29.96Êin,0.0Êin,Mostly Cloudy
+20/8/25,11:55 AM,68Ê¡F,52Ê¡F,56Ê%,NE,10Êmph,0Êmph,29.96Êin,0.0Êin,Partly Cloudy
+20/8/25,12:25 PM,68Ê¡F,52Ê¡F,56Ê%,NNE,9Êmph,0Êmph,29.96Êin,0.0Êin,Partly Cloudy
+20/8/25,12:55 PM,70Ê¡F,54Ê¡F,56Ê%,NNE,8Êmph,0Êmph,29.96Êin,0.0Êin,Partly Cloudy
+20/8/25,1:25 PM,70Ê¡F,52Ê¡F,53Ê%,NNE,9Êmph,0Êmph,29.93Êin,0.0Êin,Partly Cloudy
+20/8/25,1:55 PM,72Ê¡F,54Ê¡F,53Ê%,NE,8Êmph,0Êmph,29.93Êin,0.0Êin,Partly Cloudy
+20/8/25,2:25 PM,73Ê¡F,54Ê¡F,50Ê%,ENE,12Êmph,0Êmph,29.93Êin,0.0Êin,Partly Cloudy
+20/8/25,2:55 PM,73Ê¡F,54Ê¡F,50Ê%,ENE,9Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+20/8/25,3:25 PM,73Ê¡F,54Ê¡F,50Ê%,ENE,9Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+20/8/25,3:55 PM,73Ê¡F,55Ê¡F,53Ê%,NE,9Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+20/8/25,4:25 PM,73Ê¡F,54Ê¡F,50Ê%,ENE,9Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+20/8/25,4:55 PM,73Ê¡F,54Ê¡F,50Ê%,ENE,9Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+20/8/25,5:25 PM,73Ê¡F,55Ê¡F,53Ê%,NNE,8Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+20/8/25,5:55 PM,73Ê¡F,54Ê¡F,50Ê%,NNE,10Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+20/8/25,6:25 PM,75Ê¡F,55Ê¡F,50Ê%,NE,12Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+20/8/25,6:55 PM,73Ê¡F,54Ê¡F,50Ê%,NNE,13Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+20/8/25,7:25 PM,72Ê¡F,50Ê¡F,46Ê%,NE,16Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+20/8/25,7:55 PM,70Ê¡F,48Ê¡F,46Ê%,NE,14Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+20/8/25,8:25 PM,68Ê¡F,50Ê¡F,52Ê%,NE,14Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+20/8/25,8:55 PM,68Ê¡F,48Ê¡F,49Ê%,NNE,15Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+20/8/25,9:25 PM,66Ê¡F,50Ê¡F,56Ê%,NE,13Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+20/8/25,9:55 PM,64Ê¡F,52Ê¡F,64Ê%,NNE,14Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+20/8/25,10:25 PM,64Ê¡F,52Ê¡F,64Ê%,NNE,13Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+20/8/25,10:55 PM,64Ê¡F,52Ê¡F,64Ê%,NNE,12Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+20/8/25,11:25 PM,63Ê¡F,54Ê¡F,72Ê%,NNE,10Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+20/8/25,11:55 PM,63Ê¡F,54Ê¡F,72Ê%,NNE,10Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,12:25 AM,63Ê¡F,54Ê¡F,72Ê%,NNE,8Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,12:55 AM,61Ê¡F,54Ê¡F,77Ê%,N,7Êmph,0Êmph,29.96Êin,0.0Êin,Fair
+21/8/25,1:25 AM,61Ê¡F,54Ê¡F,77Ê%,N,6Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,1:55 AM,61Ê¡F,54Ê¡F,77Ê%,NNE,5Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,2:25 AM,61Ê¡F,54Ê¡F,77Ê%,N,5Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,2:55 AM,59Ê¡F,54Ê¡F,82Ê%,NNW,6Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,3:25 AM,59Ê¡F,54Ê¡F,82Ê%,N,7Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,3:55 AM,59Ê¡F,54Ê¡F,82Ê%,NNW,7Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,4:25 AM,59Ê¡F,54Ê¡F,82Ê%,NNW,7Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+21/8/25,4:55 AM,59Ê¡F,54Ê¡F,82Ê%,NNW,7Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+21/8/25,5:25 AM,59Ê¡F,54Ê¡F,82Ê%,N,7Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+21/8/25,5:55 AM,57Ê¡F,54Ê¡F,88Ê%,NNW,6Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+21/8/25,6:25 AM,57Ê¡F,54Ê¡F,88Ê%,NNW,6Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+21/8/25,6:55 AM,59Ê¡F,55Ê¡F,88Ê%,N,6Êmph,0Êmph,29.90Êin,0.0Êin,Fair
+21/8/25,7:25 AM,61Ê¡F,55Ê¡F,82Ê%,N,7Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,7:55 AM,63Ê¡F,55Ê¡F,77Ê%,N,7Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,8:25 AM,63Ê¡F,54Ê¡F,72Ê%,N,8Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,8:55 AM,64Ê¡F,54Ê¡F,68Ê%,N,10Êmph,0Êmph,29.93Êin,0.0Êin,Partly Cloudy
+21/8/25,9:25 AM,64Ê¡F,54Ê¡F,68Ê%,N,10Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,9:55 AM,66Ê¡F,54Ê¡F,64Ê%,NNE,14Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,10:25 AM,68Ê¡F,52Ê¡F,56Ê%,NNE,14Êmph,0Êmph,29.93Êin,0.0Êin,Fair
+21/8/25,10:55 AM,68Ê¡F,52Ê¡F,56Ê%,NNE,13Êmph,0Êmph,29.96Êin,0.0Êin,Fair
+21/8/25,11:25 AM,68Ê¡F,50Ê¡F,52Ê%,N,13Êmph,0Êmph,29.96Êin,0.0Êin,Fair
+21/8/25,11:55 AM,68Ê¡F,50Ê¡F,52Ê%,N,14Êmph,0Êmph,29.96Êin,0.0Êin,Fair
+21/8/25,12:25 PM,68Ê¡F,54Ê¡F,60Ê%,NNE,17Êmph,0Êmph,29.96Êin,0.0Êin,Fair
+21/8/25,12:55 PM,66Ê¡F,54Ê¡F,64Ê%,NNE,13Êmph,0Êmph,29.96Êin,0.0Êin,Fair
+21/8/25,1:25 PM,68Ê¡F,52Ê¡F,56Ê%,NNE,13Êmph,0Êmph,29.96Êin,0.0Êin,Fair
+21/8/25,1:55 PM,68Ê¡F,52Ê¡F,56Ê%,NNE,16Êmph,0Êmph,29.99Êin,0.0Êin,Fair
+21/8/25,2:25 PM,66Ê¡F,50Ê¡F,56Ê%,N,16Êmph,0Êmph,29.99Êin,0.0Êin,Fair
+21/8/25,2:55 PM,68Ê¡F,50Ê¡F,52Ê%,N,16Êmph,0Êmph,29.99Êin,0.0Êin,Fair
+21/8/25,3:25 PM,70Ê¡F,50Ê¡F,49Ê%,N,13Êmph,0Êmph,29.99Êin,0.0Êin,Fair
+21/8/25,3:55 PM,68Ê¡F,46Ê¡F,46Ê%,N,15Êmph,0Êmph,29.99Êin,0.0Êin,Fair
+21/8/25,4:25 PM,68Ê¡F,48Ê¡F,49Ê%,N,13Êmph,0Êmph,29.99Êin,0.0Êin,Partly Cloudy
+21/8/25,4:55 PM,66Ê¡F,48Ê¡F,52Ê%,N,14Êmph,0Êmph,29.99Êin,0.0Êin,Partly Cloudy
+21/8/25,5:25 PM,66Ê¡F,48Ê¡F,52Ê%,N,15Êmph,0Êmph,30.02Êin,0.0Êin,Mostly Cloudy
+21/8/25,5:55 PM,64Ê¡F,48Ê¡F,56Ê%,NNE,14Êmph,0Êmph,30.02Êin,0.0Êin,Mostly Cloudy
+21/8/25,6:25 PM,64Ê¡F,48Ê¡F,56Ê%,N,12Êmph,0Êmph,30.02Êin,0.0Êin,Mostly Cloudy
+21/8/25,6:55 PM,64Ê¡F,48Ê¡F,56Ê%,N,13Êmph,0Êmph,30.02Êin,0.0Êin,Mostly Cloudy
+21/8/25,7:25 PM,64Ê¡F,46Ê¡F,52Ê%,N,13Êmph,0Êmph,30.02Êin,0.0Êin,Partly Cloudy
+21/8/25,7:55 PM,63Ê¡F,45Ê¡F,52Ê%,N,12Êmph,0Êmph,30.02Êin,0.0Êin,Fair
+21/8/25,8:25 PM,63Ê¡F,45Ê¡F,52Ê%,N,9Êmph,0Êmph,30.05Êin,0.0Êin,Fair
+21/8/25,8:55 PM,63Ê¡F,48Ê¡F,59Ê%,N,10Êmph,0Êmph,30.05Êin,0.0Êin,Fair
+21/8/25,9:25 PM,61Ê¡F,48Ê¡F,63Ê%,N,10Êmph,0Êmph,30.05Êin,0.0Êin,Fair
+21/8/25,9:55 PM,61Ê¡F,48Ê¡F,63Ê%,N,9Êmph,0Êmph,30.05Êin,0.0Êin,Fair
+21/8/25,10:25 PM,61Ê¡F,48Ê¡F,63Ê%,N,9Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+21/8/25,10:55 PM,59Ê¡F,48Ê¡F,67Ê%,N,9Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+21/8/25,11:25 PM,59Ê¡F,48Ê¡F,67Ê%,N,8Êmph,0Êmph,30.08Êin,0.0Êin,Partly Cloudy
+21/8/25,11:55 PM,61Ê¡F,48Ê¡F,63Ê%,NNW,9Êmph,0Êmph,30.08Êin,0.0Êin,Mostly Cloudy
+22/8/25,12:25 AM,61Ê¡F,48Ê¡F,63Ê%,NNW,9Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+22/8/25,12:55 AM,59Ê¡F,50Ê¡F,72Ê%,N,6Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+22/8/25,1:25 AM,59Ê¡F,50Ê¡F,72Ê%,N,8Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,1:55 AM,59Ê¡F,48Ê¡F,67Ê%,NNE,7Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,2:25 AM,59Ê¡F,48Ê¡F,67Ê%,N,8Êmph,0Êmph,30.11Êin,0.0Êin,Mostly Cloudy
+22/8/25,2:55 AM,59Ê¡F,48Ê¡F,67Ê%,NNE,7Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,3:25 AM,59Ê¡F,48Ê¡F,67Ê%,NNE,8Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+22/8/25,3:55 AM,59Ê¡F,48Ê¡F,67Ê%,N,8Êmph,0Êmph,30.08Êin,0.0Êin,Light Rain Shower
+22/8/25,4:25 AM,59Ê¡F,50Ê¡F,72Ê%,NW,3Êmph,0Êmph,30.08Êin,0.0Êin,Showers in the Vicinity
+22/8/25,4:55 AM,59Ê¡F,50Ê¡F,72Ê%,N,6Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+22/8/25,5:25 AM,59Ê¡F,50Ê¡F,72Ê%,N,7Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+22/8/25,5:55 AM,59Ê¡F,50Ê¡F,72Ê%,N,6Êmph,0Êmph,30.08Êin,0.0Êin,Partly Cloudy
+22/8/25,6:25 AM,59Ê¡F,48Ê¡F,67Ê%,NNW,10Êmph,0Êmph,30.08Êin,0.0Êin,Light Rain Shower
+22/8/25,6:55 AM,59Ê¡F,48Ê¡F,67Ê%,VAR,1Êmph,0Êmph,30.08Êin,0.0Êin,Partly Cloudy
+22/8/25,7:25 AM,59Ê¡F,50Ê¡F,72Ê%,ENE,2Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+22/8/25,7:55 AM,59Ê¡F,50Ê¡F,72Ê%,CALM,0Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,8:25 AM,59Ê¡F,48Ê¡F,67Ê%,W,5Êmph,0Êmph,30.11Êin,0.0Êin,Showers in the Vicinity
+22/8/25,8:55 AM,59Ê¡F,52Ê¡F,77Ê%,W,10Êmph,0Êmph,30.11Êin,0.0Êin,Light Rain Shower
+22/8/25,9:25 AM,59Ê¡F,54Ê¡F,82Ê%,NW,5Êmph,0Êmph,30.11Êin,0.0Êin,Showers in the Vicinity
+22/8/25,9:55 AM,61Ê¡F,52Ê¡F,72Ê%,NNW,3Êmph,0Êmph,30.11Êin,0.0Êin,Partly Cloudy
+22/8/25,10:25 AM,61Ê¡F,52Ê¡F,72Ê%,N,7Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+22/8/25,10:55 AM,61Ê¡F,52Ê¡F,72Ê%,N,8Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,11:25 AM,63Ê¡F,50Ê¡F,63Ê%,NW,14Êmph,0Êmph,30.13Êin,0.0Êin,Partly Cloudy
+22/8/25,11:55 AM,64Ê¡F,48Ê¡F,56Ê%,NNW,14Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+22/8/25,12:25 PM,64Ê¡F,46Ê¡F,52Ê%,NW,13Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+22/8/25,12:55 PM,66Ê¡F,46Ê¡F,49Ê%,NW,12Êmph,0Êmph,30.13Êin,0.0Êin,Partly Cloudy
+22/8/25,1:25 PM,64Ê¡F,46Ê¡F,52Ê%,WNW,12Êmph,0Êmph,30.13Êin,0.0Êin,Partly Cloudy
+22/8/25,1:55 PM,66Ê¡F,45Ê¡F,46Ê%,NNW,13Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,2:25 PM,64Ê¡F,46Ê¡F,52Ê%,NW,14Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,2:55 PM,64Ê¡F,46Ê¡F,52Ê%,WNW,14Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,3:25 PM,66Ê¡F,45Ê¡F,46Ê%,NW,12Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,3:55 PM,64Ê¡F,48Ê¡F,56Ê%,NNW,14Êmph,0Êmph,30.11Êin,0.0Êin,Partly Cloudy
+22/8/25,4:25 PM,64Ê¡F,48Ê¡F,56Ê%,NNW,10Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,4:55 PM,64Ê¡F,48Ê¡F,56Ê%,NNW,14Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,5:25 PM,64Ê¡F,48Ê¡F,56Ê%,NNW,10Êmph,0Êmph,30.11Êin,0.0Êin,Light Rain
+22/8/25,5:55 PM,63Ê¡F,48Ê¡F,59Ê%,N,9Êmph,0Êmph,30.11Êin,0.0Êin,Light Rain
+22/8/25,6:25 PM,63Ê¡F,48Ê¡F,59Ê%,NW,8Êmph,0Êmph,30.11Êin,0.0Êin,Light Rain
+22/8/25,6:55 PM,59Ê¡F,52Ê¡F,77Ê%,NNW,9Êmph,0Êmph,30.11Êin,0.0Êin,Light Rain
+22/8/25,7:25 PM,61Ê¡F,52Ê¡F,72Ê%,NW,6Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,7:55 PM,61Ê¡F,50Ê¡F,68Ê%,WNW,5Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,8:25 PM,61Ê¡F,50Ê¡F,68Ê%,W,6Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,8:55 PM,61Ê¡F,48Ê¡F,63Ê%,W,6Êmph,0Êmph,30.11Êin,0.0Êin,Light Rain
+22/8/25,9:25 PM,59Ê¡F,52Ê¡F,77Ê%,SW,6Êmph,0Êmph,30.11Êin,0.0Êin,Light Rain
+22/8/25,9:55 PM,59Ê¡F,50Ê¡F,72Ê%,SW,9Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,10:25 PM,59Ê¡F,52Ê¡F,77Ê%,SSW,10Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+22/8/25,10:55 PM,59Ê¡F,52Ê¡F,77Ê%,SSW,12Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+22/8/25,11:25 PM,61Ê¡F,52Ê¡F,72Ê%,SW,12Êmph,0Êmph,30.08Êin,0.0Êin,Partly Cloudy
+22/8/25,11:55 PM,59Ê¡F,52Ê¡F,77Ê%,SW,9Êmph,0Êmph,30.08Êin,0.0Êin,Partly Cloudy
+23/8/25,12:25 AM,61Ê¡F,52Ê¡F,72Ê%,WSW,9Êmph,0Êmph,30.08Êin,0.0Êin,Light Rain Shower
+23/8/25,12:55 AM,59Ê¡F,55Ê¡F,88Ê%,N,10Êmph,0Êmph,30.08Êin,0.0Êin,Rain Shower
+23/8/25,1:25 AM,59Ê¡F,57Ê¡F,94Ê%,NW,6Êmph,0Êmph,30.08Êin,0.0Êin,Rain Shower
+23/8/25,1:55 AM,57Ê¡F,57Ê¡F,100Ê%,NW,3Êmph,0Êmph,30.08Êin,0.0Êin,Light Rain Shower
+23/8/25,2:25 AM,59Ê¡F,57Ê¡F,94Ê%,NNW,3Êmph,0Êmph,30.08Êin,0.0Êin,Light Rain Shower
+23/8/25,2:55 AM,59Ê¡F,57Ê¡F,94Ê%,WNW,2Êmph,0Êmph,30.08Êin,0.0Êin,Light Rain Shower
+23/8/25,3:25 AM,59Ê¡F,57Ê¡F,94Ê%,NW,3Êmph,0Êmph,30.08Êin,0.0Êin,Light Rain Shower
+23/8/25,3:55 AM,59Ê¡F,55Ê¡F,88Ê%,NNW,3Êmph,0Êmph,30.08Êin,0.0Êin,Light Rain Shower
+23/8/25,4:25 AM,59Ê¡F,55Ê¡F,88Ê%,VAR,2Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+23/8/25,4:55 AM,59Ê¡F,55Ê¡F,88Ê%,N,3Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+23/8/25,5:25 AM,59Ê¡F,54Ê¡F,82Ê%,N,1Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+23/8/25,5:55 AM,57Ê¡F,54Ê¡F,88Ê%,N,2Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+23/8/25,6:25 AM,57Ê¡F,54Ê¡F,88Ê%,WNW,3Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+23/8/25,6:55 AM,57Ê¡F,54Ê¡F,88Ê%,NW,5Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+23/8/25,7:25 AM,57Ê¡F,54Ê¡F,88Ê%,NW,3Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+23/8/25,7:55 AM,55Ê¡F,52Ê¡F,88Ê%,NW,5Êmph,0Êmph,30.08Êin,0.0Êin,Fair
+23/8/25,8:25 AM,57Ê¡F,52Ê¡F,82Ê%,NNE,3Êmph,0Êmph,30.08Êin,0.0Êin,Light Rain
+23/8/25,8:55 AM,59Ê¡F,52Ê¡F,77Ê%,ENE,1Êmph,0Êmph,30.11Êin,0.0Êin,Partly Cloudy
+23/8/25,9:25 AM,59Ê¡F,50Ê¡F,72Ê%,VAR,2Êmph,0Êmph,30.11Êin,0.0Êin,Mostly Cloudy
+23/8/25,9:55 AM,61Ê¡F,52Ê¡F,72Ê%,VAR,2Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+23/8/25,10:25 AM,61Ê¡F,52Ê¡F,72Ê%,NNW,3Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+23/8/25,10:55 AM,63Ê¡F,48Ê¡F,59Ê%,N,6Êmph,0Êmph,30.11Êin,0.0Êin,Fair
+23/8/25,11:25 AM,63Ê¡F,48Ê¡F,59Ê%,NNW,9Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,11:55 AM,63Ê¡F,48Ê¡F,59Ê%,N,10Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,12:25 PM,63Ê¡F,48Ê¡F,59Ê%,NW,12Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,12:55 PM,64Ê¡F,48Ê¡F,56Ê%,NW,9Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,1:25 PM,64Ê¡F,46Ê¡F,52Ê%,NNW,9Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,1:55 PM,64Ê¡F,50Ê¡F,59Ê%,N,12Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,2:25 PM,63Ê¡F,50Ê¡F,63Ê%,NNW,15Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,2:55 PM,64Ê¡F,50Ê¡F,59Ê%,NNW,13Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,3:25 PM,66Ê¡F,46Ê¡F,49Ê%,NNW,12Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,3:55 PM,64Ê¡F,46Ê¡F,52Ê%,N,10Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,4:25 PM,64Ê¡F,46Ê¡F,52Ê%,NNW,10Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,4:55 PM,64Ê¡F,46Ê¡F,52Ê%,NW,12Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,5:25 PM,63Ê¡F,48Ê¡F,59Ê%,N,13Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,5:55 PM,64Ê¡F,48Ê¡F,56Ê%,N,12Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,6:25 PM,63Ê¡F,48Ê¡F,59Ê%,NNW,12Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,6:55 PM,63Ê¡F,48Ê¡F,59Ê%,NW,13Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,7:25 PM,63Ê¡F,48Ê¡F,59Ê%,NW,13Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+23/8/25,7:55 PM,63Ê¡F,46Ê¡F,55Ê%,NNW,12Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+23/8/25,8:25 PM,61Ê¡F,46Ê¡F,59Ê%,NNW,8Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+23/8/25,8:55 PM,59Ê¡F,48Ê¡F,67Ê%,NNW,6Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+23/8/25,9:25 PM,59Ê¡F,48Ê¡F,67Ê%,NNW,6Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+23/8/25,9:55 PM,57Ê¡F,48Ê¡F,72Ê%,NNW,3Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+23/8/25,10:25 PM,57Ê¡F,48Ê¡F,72Ê%,NW,3Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+23/8/25,10:55 PM,55Ê¡F,48Ê¡F,77Ê%,N,2Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+23/8/25,11:25 PM,54Ê¡F,48Ê¡F,82Ê%,NNE,2Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+23/8/25,11:55 PM,54Ê¡F,50Ê¡F,88Ê%,ENE,2Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,12:25 AM,52Ê¡F,50Ê¡F,94Ê%,ENE,1Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,12:55 AM,54Ê¡F,48Ê¡F,82Ê%,ENE,1Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,1:25 AM,54Ê¡F,48Ê¡F,82Ê%,ENE,1Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,1:55 AM,54Ê¡F,50Ê¡F,88Ê%,WNW,3Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,2:25 AM,54Ê¡F,50Ê¡F,88Ê%,WNW,1Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,2:55 AM,54Ê¡F,50Ê¡F,88Ê%,NW,2Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,3:25 AM,54Ê¡F,48Ê¡F,82Ê%,W,1Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,3:55 AM,54Ê¡F,50Ê¡F,88Ê%,CALM,0Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,4:25 AM,52Ê¡F,50Ê¡F,94Ê%,W,1Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,4:55 AM,50Ê¡F,48Ê¡F,94Ê%,CALM,0Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,5:25 AM,50Ê¡F,48Ê¡F,94Ê%,CALM,0Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,5:55 AM,50Ê¡F,46Ê¡F,87Ê%,WSW,1Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,6:25 AM,50Ê¡F,46Ê¡F,87Ê%,SSW,3Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,6:55 AM,50Ê¡F,46Ê¡F,87Ê%,SW,2Êmph,0Êmph,30.16Êin,0.0Êin,Shallow Fog
+24/8/25,7:25 AM,50Ê¡F,46Ê¡F,87Ê%,SW,3Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,7:55 AM,54Ê¡F,48Ê¡F,82Ê%,W,1Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,8:25 AM,57Ê¡F,50Ê¡F,77Ê%,SSW,3Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,8:55 AM,59Ê¡F,50Ê¡F,72Ê%,SSW,5Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,9:25 AM,61Ê¡F,50Ê¡F,68Ê%,SSW,7Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,9:55 AM,63Ê¡F,48Ê¡F,59Ê%,VAR,2Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,10:25 AM,63Ê¡F,48Ê¡F,59Ê%,WNW,6Êmph,0Êmph,30.16Êin,0.0Êin,Partly Cloudy
+24/8/25,10:55 AM,63Ê¡F,50Ê¡F,63Ê%,NW,7Êmph,0Êmph,30.19Êin,0.0Êin,Fair
+24/8/25,11:25 AM,64Ê¡F,48Ê¡F,56Ê%,NNW,5Êmph,0Êmph,30.19Êin,0.0Êin,Fair
+24/8/25,11:55 AM,66Ê¡F,48Ê¡F,52Ê%,VAR,6Êmph,0Êmph,30.19Êin,0.0Êin,Fair
+24/8/25,12:25 PM,64Ê¡F,46Ê¡F,52Ê%,NNW,7Êmph,0Êmph,30.19Êin,0.0Êin,Fair
+24/8/25,12:55 PM,68Ê¡F,48Ê¡F,49Ê%,N,9Êmph,0Êmph,30.19Êin,0.0Êin,Partly Cloudy
+24/8/25,1:25 PM,66Ê¡F,48Ê¡F,52Ê%,N,9Êmph,0Êmph,30.19Êin,0.0Êin,Partly Cloudy
+24/8/25,1:55 PM,68Ê¡F,46Ê¡F,46Ê%,NW,9Êmph,0Êmph,30.19Êin,0.0Êin,Fair
+24/8/25,2:25 PM,66Ê¡F,46Ê¡F,49Ê%,N,8Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,2:55 PM,68Ê¡F,46Ê¡F,46Ê%,N,8Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,3:25 PM,68Ê¡F,48Ê¡F,49Ê%,WNW,8Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,3:55 PM,68Ê¡F,48Ê¡F,49Ê%,NNW,10Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,4:25 PM,68Ê¡F,50Ê¡F,52Ê%,NW,9Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,4:55 PM,70Ê¡F,52Ê¡F,53Ê%,NNW,9Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,5:25 PM,70Ê¡F,50Ê¡F,49Ê%,NNW,10Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,5:55 PM,66Ê¡F,50Ê¡F,56Ê%,NW,13Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,6:25 PM,68Ê¡F,52Ê¡F,56Ê%,NW,8Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+24/8/25,6:55 PM,68Ê¡F,50Ê¡F,52Ê%,NNW,6Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+24/8/25,7:25 PM,66Ê¡F,52Ê¡F,60Ê%,WNW,9Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+24/8/25,7:55 PM,64Ê¡F,52Ê¡F,64Ê%,NW,8Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+24/8/25,8:25 PM,64Ê¡F,52Ê¡F,64Ê%,NNW,8Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+24/8/25,8:55 PM,63Ê¡F,54Ê¡F,72Ê%,NW,6Êmph,0Êmph,30.13Êin,0.0Êin,Smoke
+24/8/25,9:25 PM,61Ê¡F,54Ê¡F,77Ê%,NNW,5Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+24/8/25,9:55 PM,61Ê¡F,54Ê¡F,77Ê%,NNW,2Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,10:25 PM,61Ê¡F,52Ê¡F,72Ê%,NW,1Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,10:55 PM,59Ê¡F,52Ê¡F,77Ê%,NW,1Êmph,0Êmph,30.16Êin,0.0Êin,Fair
+24/8/25,11:25 PM,57Ê¡F,54Ê¡F,88Ê%,NW,1Êmph,0Êmph,30.13Êin,0.0Êin,Fair
+24/8/25,11:55 PM,57Ê¡F,54Ê¡F,88Ê%,NW,1Êmph,0Êmph,30.13Êin,0.0Êin,Fair
