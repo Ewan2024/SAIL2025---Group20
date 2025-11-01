@@ -35,6 +35,7 @@ def init_map(map_style, center, zoom):
     return m
 
 # Add sensor markers if turned on
+@st.cache_data
 def add_sensor_markers(m, sensor_loc):      
     missing_rows = [] # List to store rows with missing data
     for idx, row in sensor_loc.iterrows():
@@ -52,10 +53,10 @@ def add_sensor_markers(m, sensor_loc):
                 prefix='fa'
             )
         ).add_to(m)
-    if missing_rows:
-        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}") #to announce to user if there is data
+    return missing_rows #to announce to user if there is data
 
 # Add sensor labels
+@st.cache_data
 def add_sensor_labels(m, sensor_loc):
     missing_rows = [] # List to store rows with missing data
     for idx, row in sensor_loc.iterrows():
@@ -82,8 +83,7 @@ def add_sensor_labels(m, sensor_loc):
             )
         ).add_to(m)
         # ---- Display missing rows info on Streamlit ---
-    if missing_rows:
-        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
+    return missing_rows
 
 # Add sensor circles 
 def add_sensor_circles(m, sensor_loc, sensor_data):
@@ -123,8 +123,7 @@ def add_sensor_circles(m, sensor_loc, sensor_data):
             """
         ).add_to(m)
         # ---- Display missing rows info on Streamlit ---
-    if missing_rows:
-        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
+    return missing_rows
 
 def add_sensor_arrows(m, sensor_loc, sensor_data):
     missing_rows = []
@@ -175,8 +174,7 @@ def add_sensor_arrows(m, sensor_loc, sensor_data):
         ).add_to(m)
 
     # Warning for skipped rows
-    if missing_rows:
-        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing or invalid data: {missing_rows}")
+    return missing_rows
 
 def add_stops_circles(m, tram_metro_gdf):
     tram_metro_stop_group = folium.FeatureGroup(name="Tram/Metro Stops", show=True)
@@ -210,5 +208,4 @@ def add_heatmap(m, sensor_loc, sensor_data):
     if heat_data:
         HeatMap(heat_data, radius=15, blur=10, max_zoom=1).add_to(m)
 
-    if missing_rows:
-        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
+    return missing_rows
