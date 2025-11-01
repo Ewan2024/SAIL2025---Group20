@@ -8,6 +8,12 @@ from datetime import timedelta
 import plotly.graph_objects as go
 from data_loader import load_live_sensor_data
 
+
+#check whether user is logged in. Only then the page is loaded - only activate upon final implementation
+#from security import check_login_status 
+#check_login_status()
+
+
 # # --- Functions ---
 
 
