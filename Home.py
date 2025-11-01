@@ -22,7 +22,7 @@ st.set_page_config(
     page_icon="📍"
 )
 
-REFRESH_INTERVAL = 5  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
+REFRESH_INTERVAL = 10  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
 
 # 1. Initialize session state on the first run
 if "last_refresh" not in st.session_state:
@@ -41,7 +41,9 @@ if "last_refresh" not in st.session_state:
 
 def main():
     if "scroll_position" in st.session_state:
-        streamlit_js_eval(f"window.scrollTo(0, {st.session_state.scroll_position});")
+        restore_key = f"restore_scroll_{st.session_state.get('last_refresh', 0.0)}" 
+        streamlit_js_eval(js_code=f"window.scrollTo(0, {st.session_state.scroll_position});",key=restore_key) # The key changes with every refresh, forcing the JS to run.
+        
 
     # 2. Auto refresh  
     st_autorefresh(interval=REFRESH_INTERVAL * 1000, key="auto_refresher") #take time from refresh interval and convert to milliseconds
@@ -102,19 +104,33 @@ def main():
         zoom=st.session_state.map_zoom
     )
 
-    #if st.session_state.show_sensor_data: add_sensor_circles(m, sensor_loc, sensor_data)
+    all_skipped_rows = set()
 
     if st.session_state.show_sensor_data:
         if st.session_state.use_alt_data:
-            add_flow_sensor_circles(m, sensor_loc, display_sensor_data)
+            skipped = add_flow_sensor_circles(m, sensor_loc, display_sensor_data)
         else:
-            add_sensor_circles(m, sensor_loc, display_sensor_data)
+            skipped = add_sensor_circles(m, sensor_loc, display_sensor_data)
+        all_skipped_rows.update(skipped)
 
-    if st.session_state.show_sensor_arrows: add_sensor_arrows(m, sensor_loc, sensor_data)
-    if st.session_state.show_heatmap: add_heatmap(m, sensor_loc, sensor_data)
-    if st.session_state.show_sensor_loc: add_sensor_markers(m, sensor_loc)
-    if st.session_state.show_sensor_labels: add_sensor_labels(m, sensor_loc)
-    if st.session_state.show_tram_metro_stops: add_stops_circles(m, tram_metro_stops_gpd)
+    if st.session_state.show_sensor_arrows:
+        skipped = add_sensor_arrows(m, sensor_loc, sensor_data)
+        all_skipped_rows.update(skipped)
+
+    if st.session_state.show_heatmap:
+        skipped = add_heatmap(m, sensor_loc, sensor_data)
+        all_skipped_rows.update(skipped)
+
+    if st.session_state.show_sensor_loc:
+        skipped = add_sensor_markers(m, sensor_loc)
+        all_skipped_rows.update(skipped)
+
+    if st.session_state.show_sensor_labels:
+        skipped = add_sensor_labels(m, sensor_loc)
+        all_skipped_rows.update(skipped)
+
+    if st.session_state.show_tram_metro_stops:
+        add_stops_circles(m, tram_metro_stops_gpd)
 
     map_output = st_folium(m, width=1200, height=700, key="folium_map")
 
@@ -127,7 +143,11 @@ def main():
     st.header(f"Showing Data for: {display_time.strftime('%Y-%m-%d %H:%M:%S')}") #tells you what time the data is being shown
     st.caption(f"Next automatic data refresh in {int(max(0, time_left))} seconds.") #in how long the bashboard will refresh - this updates whenn you click on the page. Could not make this happen automatically
 
-    st.session_state.scroll_position = streamlit_js_eval("return window.scrollY", key="get_scroll_position")
+    st.session_state.scroll_position = streamlit_js_eval(js_code="return window.scrollY", key="get_scroll_position")
+
+    if all_skipped_rows:
+        sorted_rows = sorted(list(all_skipped_rows))
+        st.warning(f"Skipped {len(sorted_rows)} unique row(s) due to missing data: {sorted_rows}")
 
 if __name__ == "__main__":
     main()
