@@ -1,4 +1,5 @@
 import folium
+import pandas as pd
 import streamlit as st
 import folium.plugins
 from folium.plugins import HeatMap
@@ -85,6 +86,50 @@ def add_sensor_labels(m, sensor_loc):
     if missing_rows:
         st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
 
+# Add sensor circles for crowd flow
+def add_flow_sensor_circles(m, sensor_loc, sensor_data):
+    missing_rows = [] # List to store rows with missing data
+    for i, row in sensor_loc.iterrows():
+        # check if any critical column is missing
+        if row[['Lat', 'Lon','Locatienaam','Objectummer']].isnull().any():
+            missing_rows.append(i)
+            continue # skip this row
+        # Get crowd data from sensor_data
+        sensor_id = row['sensor_id_full']
+        sensor_count = sensor_data[sensor_id][0]
+        #sensor_count = sensor_data.get(sensor_id, [None])[0]
+        #if sensor_count is None or pd.isna(sensor_count):
+            #continue
+        # Map intensity to color and radius dynamically
+        if sensor_count <= 0.5:
+            color = '#00FF00'   # green (low)
+        elif sensor_count <= 2.5:
+            color = '#FFFF00'   # yellow (medium)
+        elif sensor_count <= 5:
+            color = '#FFA500'   # orange (high)
+        else:
+            color = '#FF0000'   # red (very high)
+
+        radius = 2 + (sensor_count * 1) # scale radius to make differences visible
+
+        # Add circle overlay
+        folium.CircleMarker(
+            location =[row['Lat'],row['Lon']],
+            radius = radius,
+            color=color,
+            fill = True,
+            fill_color = color,
+            fill_opacity = 0.6,
+            popup=f"""
+                <b>{row['Locatienaam']}<b><br>
+                Objectummer: {row['Objectummer']}<br>
+                Intensity: {sensor_count}
+            """
+        ).add_to(m)
+        # ---- Display missing rows info on Streamlit ---
+    if missing_rows:
+        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
+
 # Add sensor circles 
 def add_sensor_circles(m, sensor_loc, sensor_data):
     missing_rows = [] # List to store rows with missing data
@@ -96,6 +141,9 @@ def add_sensor_circles(m, sensor_loc, sensor_data):
         # Get crowd data from sensor_data
         sensor_id = row['sensor_id_full']
         sensor_count = sensor_data[sensor_id][0]
+        #sensor_count = sensor_data.get(sensor_id, [None])[0]
+        #if sensor_count is None or pd.isna(sensor_count):
+            #continue
         # Map intensity to color and radius dynamically
         if sensor_count <= 20:
             color = '#00FF00'   # green (low)
