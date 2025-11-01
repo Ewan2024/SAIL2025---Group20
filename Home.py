@@ -1,10 +1,12 @@
 import streamlit as st
+import pandas as pd
 from streamlit_folium import st_folium
 import time #to work with the time in the dataset
 from streamlit_autorefresh import st_autorefresh #allows the auto refresh of the dashbaord
 from streamlit_js_eval import streamlit_js_eval
 from data_loader import (load_live_sensor_data, load_sensor_locations, load_tram_metro_data, init_data_stream)
-from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_sensor_arrows, add_stops_circles, add_heatmap)
+from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_flow_sensor_circles, add_sensor_arrows, add_stops_circles, add_heatmap)
+from calculate_crowd_flow import calculate_crowd_flow
 
 #Import function used for login - only activate upon final implementation
 #from pages.C_User_Authentification import load_user_data
@@ -56,6 +58,28 @@ def main():
     tram_metro_stops_gpd = load_tram_metro_data()
     sensor_data = st.session_state.sensor_data
     current_timestamp = st.session_state.current_timestamp
+    crowd_flow = calculate_crowd_flow(st.session_state.current_timestamp)  # Updating crowd flow dataset for current timestamp
+    alt_sensor_data = {col: [val] for col, val in crowd_flow.loc[st.session_state.current_timestamp].items()} # Turning data frame into dictionary format
+
+
+    # toggle between data sets
+    # Initialize toggle state
+    if "use_alt_data" not in st.session_state:
+        st.session_state.use_alt_data = False
+
+    # Sidebar toggle button
+    if st.sidebar.button("Toggle Dataset"):
+        st.session_state.use_alt_data = not st.session_state.use_alt_data
+
+    # Use the appropriate dataset
+    if st.session_state.use_alt_data:
+        alt_sensor_data = {k: v for k, v in sensor_data.items() if v[0] is not None and not pd.isna(v[0])}
+        st.sidebar.info("Showing **Crowd Flow**")
+        display_sensor_data = alt_sensor_data
+    else:
+        st.sidebar.info("Showing **Crowd Count**")
+        display_sensor_data = sensor_data
+
 
     # Sidebar and Map
     st.sidebar.title("Map Options")
@@ -78,7 +102,14 @@ def main():
         zoom=st.session_state.map_zoom
     )
 
-    if st.session_state.show_sensor_data: add_sensor_circles(m, sensor_loc, sensor_data)
+    #if st.session_state.show_sensor_data: add_sensor_circles(m, sensor_loc, sensor_data)
+
+    if st.session_state.show_sensor_data:
+        if st.session_state.use_alt_data:
+            add_flow_sensor_circles(m, sensor_loc, display_sensor_data)
+        else:
+            add_sensor_circles(m, sensor_loc, display_sensor_data)
+
     if st.session_state.show_sensor_arrows: add_sensor_arrows(m, sensor_loc, sensor_data)
     if st.session_state.show_heatmap: add_heatmap(m, sensor_loc, sensor_data)
     if st.session_state.show_sensor_loc: add_sensor_markers(m, sensor_loc)

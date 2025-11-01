@@ -57,7 +57,7 @@ def calculate_crowd_flow(timestamp):
 
         # empty rows might mess up the length of the list that will be appended, therefore an empty placeholder is added instead
         if sensor_data[sensor_data['timestamp'] == timestamp].empty or sensor_locations[sensor_locations['sensor_id_full'] == i].empty:
-            flow_data.append(None)
+            flow_data.append(0)
             continue
 
         # calculates crowd flow as: number of people / width / time(3 mins)
@@ -68,5 +68,7 @@ def calculate_crowd_flow(timestamp):
 
     # adds the crowd flow of the timestamp used in this function to the data frame crowd_flow
     crowd_flow.loc[timestamp] = flow_data
+
+    #crowd_flow_long = crowd_flow.reset_index().melt(id_vars="timestamp", var_name="sensor_id_full", value_name="sensor_count")
 
     return crowd_flow
