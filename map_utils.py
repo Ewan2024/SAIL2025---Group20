@@ -127,8 +127,9 @@ def add_flow_sensor_circles(m, sensor_loc, sensor_data):
             """
         ).add_to(m)
         # ---- Display missing rows info on Streamlit ---
-    if missing_rows:
-        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
+    return missing_rows
+    #if missing_rows:
+        #st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
 
 # Add sensor circles 
 def add_sensor_circles(m, sensor_loc, sensor_data):

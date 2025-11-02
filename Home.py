@@ -53,6 +53,8 @@ def main():
         sensor_data, timestamp = load_live_sensor_data()
         st.session_state.sensor_data = sensor_data
         st.session_state.current_timestamp = timestamp
+        crowd_flow = calculate_crowd_flow(st.session_state.current_timestamp)  # Updating crowd flow dataset for current timestamp
+        st.session_state.crowd_flow = crowd_flow
         st.session_state.last_refresh = time.time()
 
     # Load data from session state for display
@@ -60,9 +62,10 @@ def main():
     tram_metro_stops_gpd = load_tram_metro_data()
     sensor_data = st.session_state.sensor_data
     current_timestamp = st.session_state.current_timestamp
-    crowd_flow = calculate_crowd_flow(st.session_state.current_timestamp)  # Updating crowd flow dataset for current timestamp
-    alt_sensor_data = {col: [val] for col, val in crowd_flow.loc[st.session_state.current_timestamp].items()} # Turning data frame into dictionary format
-
+    crowd_flow = st.session_state.get("crowd_flow", {})
+    #alt_sensor_data = {col: [val] for col, val in crowd_flow.loc[st.session_state.current_timestamp].items()} # Turning data frame into dictionary format
+    crowd_flow = {k: v for k, v in crowd_flow.items() if v[0] is not None and not pd.isna(v[0])}
+    
 
     # toggle between data sets
     # Initialize toggle state
@@ -72,12 +75,14 @@ def main():
     # Sidebar toggle button
     if st.sidebar.button("Toggle Dataset"):
         st.session_state.use_alt_data = not st.session_state.use_alt_data
+        st.rerun()
 
     # Use the appropriate dataset
     if st.session_state.use_alt_data:
-        alt_sensor_data = {k: v for k, v in sensor_data.items() if v[0] is not None and not pd.isna(v[0])}
         st.sidebar.info("Showing **Crowd Flow**")
-        display_sensor_data = alt_sensor_data
+        #alt_sensor_data = {col: [val] for col, val in crowd_flow.loc[st.session_state.current_timestamp].items()} # Turning data frame into dictionary format
+        #alt_sensor_data = {k: v for k, v in alt_sensor_data.items() if v[0] is not None and not pd.isna(v[0])}
+        display_sensor_data = crowd_flow
     else:
         st.sidebar.info("Showing **Crowd Count**")
         display_sensor_data = sensor_data
@@ -118,7 +123,10 @@ def main():
         all_skipped_rows.update(skipped)
 
     if st.session_state.show_heatmap:
-        skipped = add_heatmap(m, sensor_loc, sensor_data)
+        if st.session_state.use_alt_data:
+            skipped = add_heatmap(m, sensor_loc, display_sensor_data)
+        else:
+            skipped = add_heatmap(m, sensor_loc, display_sensor_data)
         all_skipped_rows.update(skipped)
 
     if st.session_state.show_sensor_loc:
