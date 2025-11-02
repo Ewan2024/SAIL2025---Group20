@@ -5,7 +5,7 @@ import time #to work with the time in the dataset
 from streamlit_autorefresh import st_autorefresh #allows the auto refresh of the dashbaord
 from streamlit_js_eval import streamlit_js_eval
 from data_loader import (load_live_sensor_data, load_sensor_locations, load_tram_metro_data, init_data_stream)
-from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_flow_sensor_circles, add_sensor_arrows, add_stops_circles, add_heatmap)
+from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_flow_sensor_circles, add_sensor_arrows, add_flow_sensor_arrows, add_stops_circles, add_heatmap)
 from calculate_crowd_flow import calculate_crowd_flow
 
 #Import function used for login - only activate upon final implementation
@@ -63,7 +63,6 @@ def main():
     sensor_data = st.session_state.sensor_data
     current_timestamp = st.session_state.current_timestamp
     crowd_flow = st.session_state.get("crowd_flow", {})
-    #alt_sensor_data = {col: [val] for col, val in crowd_flow.loc[st.session_state.current_timestamp].items()} # Turning data frame into dictionary format
     crowd_flow = {k: v for k, v in crowd_flow.items() if v[0] is not None and not pd.isna(v[0])}
     
 
@@ -75,13 +74,11 @@ def main():
     # Sidebar toggle button
     if st.sidebar.button("Toggle Dataset"):
         st.session_state.use_alt_data = not st.session_state.use_alt_data
-        st.rerun()
+        #st.rerun()
 
     # Use the appropriate dataset
     if st.session_state.use_alt_data:
         st.sidebar.info("Showing **Crowd Flow**")
-        #alt_sensor_data = {col: [val] for col, val in crowd_flow.loc[st.session_state.current_timestamp].items()} # Turning data frame into dictionary format
-        #alt_sensor_data = {k: v for k, v in alt_sensor_data.items() if v[0] is not None and not pd.isna(v[0])}
         display_sensor_data = crowd_flow
     else:
         st.sidebar.info("Showing **Crowd Count**")
@@ -112,21 +109,21 @@ def main():
     all_skipped_rows = set()
 
     if st.session_state.show_sensor_data:
-        if st.session_state.use_alt_data:
+        if st.session_state.use_alt_data: # run correct function with correct grading for the right dataset
             skipped = add_flow_sensor_circles(m, sensor_loc, display_sensor_data)
         else:
             skipped = add_sensor_circles(m, sensor_loc, display_sensor_data)
         all_skipped_rows.update(skipped)
 
     if st.session_state.show_sensor_arrows:
-        skipped = add_sensor_arrows(m, sensor_loc, sensor_data)
+        if st.session_state.use_alt_data: # run correct function with correct grading for the right dataset
+            skipped = add_flow_sensor_arrows(m, sensor_loc, display_sensor_data)
+        else:
+            skipped = add_sensor_arrows(m, sensor_loc, display_sensor_data)
         all_skipped_rows.update(skipped)
 
     if st.session_state.show_heatmap:
-        if st.session_state.use_alt_data:
-            skipped = add_heatmap(m, sensor_loc, display_sensor_data)
-        else:
-            skipped = add_heatmap(m, sensor_loc, display_sensor_data)
+        skipped = add_heatmap(m, sensor_loc, display_sensor_data)
         all_skipped_rows.update(skipped)
 
     if st.session_state.show_sensor_loc:
