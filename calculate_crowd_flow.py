@@ -62,7 +62,7 @@ def calculate_crowd_flow(timestamp):
             continue
 
         # calculates crowd flow as: number of people / width / time(3 mins)
-        flow_number = float(sensor_data.loc[row, i]) / float(sensor_locations.loc[another_row, "Effectieve  breedte"]) / 3
+        flow_number = int(sensor_data.loc[row, i].iloc[0]) / float(sensor_locations.loc[another_row, "Effectieve  breedte"].iloc[0]) / 3
         # adds the result of the calculation to the list flow_data
         flow_data.append(flow_number)
 
