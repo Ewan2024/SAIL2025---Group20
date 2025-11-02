@@ -1,10 +1,20 @@
 import streamlit as st
+import pandas as pd
 from streamlit_folium import st_folium
 import time #to work with the time in the dataset
 from streamlit_autorefresh import st_autorefresh #allows the auto refresh of the dashbaord
 from streamlit_js_eval import streamlit_js_eval
 from data_loader import (load_live_sensor_data, load_sensor_locations, load_tram_metro_data, init_data_stream)
-from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_sensor_arrows, add_stops_circles, add_heatmap)
+from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_flow_sensor_circles, add_sensor_arrows, add_stops_circles, add_heatmap)
+from calculate_crowd_flow import calculate_crowd_flow
+
+#Import function used for login - only activate upon final implementation
+#from pages.C_User_Authentification import load_user_data
+#from pages.C_User_Authentification import save_user_data
+#from pages.C_User_Authentification import hash_passwords
+#from pages.C_User_Authentification import authenticate_user
+#from pages.C_User_Authentification import login_page
+
 
 st.set_page_config(
     page_title="SAIL 2025 Crowd Monitoring Dashboard",
@@ -12,7 +22,7 @@ st.set_page_config(
     page_icon="📍"
 )
 
-REFRESH_INTERVAL = 5  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
+REFRESH_INTERVAL = 10  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
 
 # 1. Initialize session state on the first run
 if "last_refresh" not in st.session_state:
@@ -23,9 +33,17 @@ if "last_refresh" not in st.session_state:
     st.session_state.map_center = [52.37, 4.89] # Amsterdam, this is for the first time loading the map.
     st.session_state.map_zoom = 13 # Default zoom when loading the map for the first time
 
+# Add authentication session state initialization - only activate upon full implementation
+#if 'logged_in' not in st.session_state:
+    #st.session_state['logged_in'] = False
+#if 'username' not in st.session_state:
+    #st.session_state['username'] = None
+
 def main():
     if "scroll_position" in st.session_state:
-        streamlit_js_eval(f"window.scrollTo(0, {st.session_state.scroll_position});")
+        restore_key = f"restore_scroll_{st.session_state.get('last_refresh', 0.0)}" 
+        streamlit_js_eval(js_code=f"window.scrollTo(0, {st.session_state.scroll_position});",key=restore_key) # The key changes with every refresh, forcing the JS to run.
+        
 
     # 2. Auto refresh  
     st_autorefresh(interval=REFRESH_INTERVAL * 1000, key="auto_refresher") #take time from refresh interval and convert to milliseconds
@@ -42,6 +60,28 @@ def main():
     tram_metro_stops_gpd = load_tram_metro_data()
     sensor_data = st.session_state.sensor_data
     current_timestamp = st.session_state.current_timestamp
+    crowd_flow = calculate_crowd_flow(st.session_state.current_timestamp)  # Updating crowd flow dataset for current timestamp
+    alt_sensor_data = {col: [val] for col, val in crowd_flow.loc[st.session_state.current_timestamp].items()} # Turning data frame into dictionary format
+
+
+    # toggle between data sets
+    # Initialize toggle state
+    if "use_alt_data" not in st.session_state:
+        st.session_state.use_alt_data = False
+
+    # Sidebar toggle button
+    if st.sidebar.button("Toggle Dataset"):
+        st.session_state.use_alt_data = not st.session_state.use_alt_data
+
+    # Use the appropriate dataset
+    if st.session_state.use_alt_data:
+        alt_sensor_data = {k: v for k, v in sensor_data.items() if v[0] is not None and not pd.isna(v[0])}
+        st.sidebar.info("Showing **Crowd Flow**")
+        display_sensor_data = alt_sensor_data
+    else:
+        st.sidebar.info("Showing **Crowd Count**")
+        display_sensor_data = sensor_data
+
 
     # Sidebar and Map
     st.sidebar.title("Map Options")
@@ -64,12 +104,33 @@ def main():
         zoom=st.session_state.map_zoom
     )
 
-    if st.session_state.show_sensor_data: add_sensor_circles(m, sensor_loc, sensor_data)
-    if st.session_state.show_sensor_arrows: add_sensor_arrows(m, sensor_loc, sensor_data)
-    if st.session_state.show_heatmap: add_heatmap(m, sensor_loc, sensor_data)
-    if st.session_state.show_sensor_loc: add_sensor_markers(m, sensor_loc)
-    if st.session_state.show_sensor_labels: add_sensor_labels(m, sensor_loc)
-    if st.session_state.show_tram_metro_stops: add_stops_circles(m, tram_metro_stops_gpd)
+    all_skipped_rows = set()
+
+    if st.session_state.show_sensor_data:
+        if st.session_state.use_alt_data:
+            skipped = add_flow_sensor_circles(m, sensor_loc, display_sensor_data)
+        else:
+            skipped = add_sensor_circles(m, sensor_loc, display_sensor_data)
+        all_skipped_rows.update(skipped)
+
+    if st.session_state.show_sensor_arrows:
+        skipped = add_sensor_arrows(m, sensor_loc, sensor_data)
+        all_skipped_rows.update(skipped)
+
+    if st.session_state.show_heatmap:
+        skipped = add_heatmap(m, sensor_loc, sensor_data)
+        all_skipped_rows.update(skipped)
+
+    if st.session_state.show_sensor_loc:
+        skipped = add_sensor_markers(m, sensor_loc)
+        all_skipped_rows.update(skipped)
+
+    if st.session_state.show_sensor_labels:
+        skipped = add_sensor_labels(m, sensor_loc)
+        all_skipped_rows.update(skipped)
+
+    if st.session_state.show_tram_metro_stops:
+        add_stops_circles(m, tram_metro_stops_gpd)
 
     map_output = st_folium(m, width=1200, height=700, key="folium_map")
 
@@ -82,7 +143,21 @@ def main():
     st.header(f"Showing Data for: {display_time.strftime('%Y-%m-%d %H:%M:%S')}") #tells you what time the data is being shown
     st.caption(f"Next automatic data refresh in {int(max(0, time_left))} seconds.") #in how long the bashboard will refresh - this updates whenn you click on the page. Could not make this happen automatically
 
-    st.session_state.scroll_position = streamlit_js_eval("return window.scrollY", key="get_scroll_position")
+    st.session_state.scroll_position = streamlit_js_eval(js_code="return window.scrollY", key="get_scroll_position")
+
+    if all_skipped_rows:
+        sorted_rows = sorted(list(all_skipped_rows))
+        st.warning(f"Skipped {len(sorted_rows)} unique row(s) due to missing data: {sorted_rows}")
 
 if __name__ == "__main__":
     main()
+    
+    #Below is the code that adds the login functionality as a landing page - only activate upon final implementation
+    #if st.session_state['logged_in']:
+        # Forward user to main dashboard (main()) if logged in 
+        #st.sidebar.button("Logout", on_click=lambda: st.session_state.update(logged_in=False, username=None))
+        #main()
+    #else:
+        # Forward user to Login/ Signup page if not logged in
+        #st.set_page_config(page_title="Login Page", layout="wide", initial_sidebar_state="collapsed")
+        #login_page()
