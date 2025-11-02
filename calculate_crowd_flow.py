@@ -5,6 +5,7 @@ from data_loader import load_sensor_data
 
 # function to add rows with calculated crowd flow data to crowd_flow
 def calculate_crowd_flow(timestamp):
+    correct_time = str(timestamp) + "+02:00"
     # load data sets
     sensor_data = load_sensor_data()
     sensor_locations = load_sensor_locations()
@@ -42,7 +43,7 @@ def calculate_crowd_flow(timestamp):
 
 
     # gets the index of the respective row
-    row = sensor_data.index[sensor_data['timestamp'] == timestamp]
+    row = sensor_data.index[sensor_data['timestamp'] == correct_time]
     # list wich will be added to the dataframe
     flow_data = []
 
@@ -56,7 +57,7 @@ def calculate_crowd_flow(timestamp):
         another_row = sensor_locations.index[sensor_locations['sensor_id_full'] == i]
 
         # empty rows might mess up the length of the list that will be appended, therefore an empty placeholder is added instead
-        if sensor_data[sensor_data['timestamp'] == timestamp].empty or sensor_locations[sensor_locations['sensor_id_full'] == i].empty:
+        if sensor_data[sensor_data['timestamp'] == correct_time].empty or sensor_locations[sensor_locations['sensor_id_full'] == i].empty:
             flow_data.append(0)
             continue
 
@@ -67,8 +68,8 @@ def calculate_crowd_flow(timestamp):
 
 
     # adds the crowd flow of the timestamp used in this function to the data frame crowd_flow
-    crowd_flow.loc[timestamp] = flow_data
+    crowd_flow.loc[correct_time] = flow_data
+    dict = {col: [val] for col, val in crowd_flow.loc[correct_time].items()}
+    #crowd_flow_long = crowd_flow.reset_index()
 
-    #crowd_flow_long = crowd_flow.reset_index().melt(id_vars="timestamp", var_name="sensor_id_full", value_name="sensor_count")
-
-    return crowd_flow
+    return dict
