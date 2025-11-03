@@ -5,6 +5,7 @@ from data_loader import load_sensor_data
 
 # function to add rows with calculated crowd flow data to crowd_flow
 def calculate_crowd_flow(timestamp):
+    correct_time = str(timestamp) + "+02:00"
     # load data sets
     sensor_data = load_sensor_data()
     sensor_locations = load_sensor_locations()
@@ -42,7 +43,7 @@ def calculate_crowd_flow(timestamp):
 
 
     # gets the index of the respective row
-    row = sensor_data.index[sensor_data['timestamp'] == timestamp]
+    row = sensor_data.index[sensor_data['timestamp'] == correct_time]
     # list wich will be added to the dataframe
     flow_data = []
 
@@ -56,19 +57,46 @@ def calculate_crowd_flow(timestamp):
         another_row = sensor_locations.index[sensor_locations['sensor_id_full'] == i]
 
         # empty rows might mess up the length of the list that will be appended, therefore an empty placeholder is added instead
-        if sensor_data[sensor_data['timestamp'] == timestamp].empty or sensor_locations[sensor_locations['sensor_id_full'] == i].empty:
+        if sensor_data[sensor_data['timestamp'] == correct_time].empty or sensor_locations[sensor_locations['sensor_id_full'] == i].empty:
             flow_data.append(0)
             continue
 
         # calculates crowd flow as: number of people / width / time(3 mins)
-        flow_number = float(sensor_data.loc[row, i]) / float(sensor_locations.loc[another_row, "Effectieve  breedte"]) / 3
+        flow_number = int(sensor_data.loc[row, i].iloc[0]) / float(sensor_locations.loc[another_row, "Effectieve  breedte"].iloc[0]) / 3
         # adds the result of the calculation to the list flow_data
         flow_data.append(flow_number)
 
 
     # adds the crowd flow of the timestamp used in this function to the data frame crowd_flow
-    crowd_flow.loc[timestamp] = flow_data
+    crowd_flow.loc[correct_time] = flow_data
+    dict = {col: [val] for col, val in crowd_flow.loc[correct_time].items()}
 
-    #crowd_flow_long = crowd_flow.reset_index().melt(id_vars="timestamp", var_name="sensor_id_full", value_name="sensor_count")
+    return dict
 
-    return crowd_flow
+
+# function to add rows for specific timestamp to new dataframe
+def add_new_row(timestamp):
+    correct_time = str(timestamp) + "+02:00"
+    # load data sets
+    sensor_data = load_sensor_data()
+
+    # Remove unwanted columns if they exist
+    sensor_data = sensor_data.drop(columns=[col for col in ['level_0', 'index'] if col in sensor_data.columns])
+
+
+    # makes crowd_flow a global variable that exists outside the function
+    global count_frame
+    # checks if crowd_flow doesn't exist
+    if "count_frame" not in globals() or set(count_frame.columns) != set(sensor_data.columns):
+        # create empty data frame
+        count_frame = pd.DataFrame(columns=sensor_data.columns)
+
+
+    # Select the matching row
+    row_data = sensor_data[sensor_data["timestamp"] == correct_time]
+    # If a matching row exists
+    if not row_data.empty:
+        # Assign the values to a new row with this timestamp as index
+        count_frame.loc[correct_time] = row_data[count_frame.columns].iloc[0]
+
+    return count_frame

@@ -101,11 +101,11 @@ def add_flow_sensor_circles(m, sensor_loc, sensor_data):
         #if sensor_count is None or pd.isna(sensor_count):
             #continue
         # Map intensity to color and radius dynamically
-        if sensor_count <= 0.5:
+        if sensor_count <= 1:
             color = '#00FF00'   # green (low)
-        elif sensor_count <= 2.5:
-            color = '#FFFF00'   # yellow (medium)
         elif sensor_count <= 5:
+            color = '#FFFF00'   # yellow (medium)
+        elif sensor_count <= 10:
             color = '#FFA500'   # orange (high)
         else:
             color = '#FF0000'   # red (very high)
@@ -127,8 +127,9 @@ def add_flow_sensor_circles(m, sensor_loc, sensor_data):
             """
         ).add_to(m)
         # ---- Display missing rows info on Streamlit ---
-    if missing_rows:
-        st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
+    return missing_rows
+    #if missing_rows:
+        #st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
 
 # Add sensor circles 
 def add_sensor_circles(m, sensor_loc, sensor_data):
@@ -196,6 +197,57 @@ def add_sensor_arrows(m, sensor_loc, sensor_data):
         elif count <= 50:
             color = '#FFFF00'  # yellow
         elif count <= 80:
+            color = '#FFA500'  # orange
+        else:
+            color = '#FF0000'  # red
+
+        # Add arrow marker using direction
+        folium.Marker(
+            location=[lat, lon],
+            icon=folium.DivIcon(
+                html=f"""
+                    <div style="
+                        font-size: 24px;
+                        transform: rotate({direction}deg);
+                        color: {color};
+                        font-weight: bold;
+                    ">→</div>
+                """
+            ),
+            popup=folium.Popup(f"""
+                <b>{row['Locatienaam']}</b><br>
+                Objectummer: {row['Objectummer']}<br>
+                Intensity: {count}<br>
+                Direction: {direction}°
+            """, max_width=300)
+        ).add_to(m)
+
+    # Warning for skipped rows
+    return missing_rows
+
+def add_flow_sensor_arrows(m, sensor_loc, sensor_data):
+    missing_rows = []
+
+    for i, row in sensor_loc.iterrows():
+        # Skip if any critical value is missing
+        if row[['Lat', 'Lon', 'Locatienaam', 'Objectummer', 'sensor_direction']].isnull().any():
+            missing_rows.append(i)
+            continue
+
+        lat = row['Lat']
+        lon = row['Lon']
+        direction = row['sensor_direction']
+        sensor_id = row['sensor_id_full']
+
+        # Get crowd count from sensor_data
+        count = sensor_data.get(sensor_id, [0])[0]
+
+        # Define color based on count
+        if count <= 1:
+            color = '#00FF00'  # green
+        elif count <= 5:
+            color = '#FFFF00'  # yellow
+        elif count <= 10:
             color = '#FFA500'  # orange
         else:
             color = '#FF0000'  # red
