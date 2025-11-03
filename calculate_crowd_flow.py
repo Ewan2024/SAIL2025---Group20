@@ -70,6 +70,33 @@ def calculate_crowd_flow(timestamp):
     # adds the crowd flow of the timestamp used in this function to the data frame crowd_flow
     crowd_flow.loc[correct_time] = flow_data
     dict = {col: [val] for col, val in crowd_flow.loc[correct_time].items()}
-    #crowd_flow_long = crowd_flow.reset_index()
 
     return dict
+
+
+# function to add rows for specific timestamp to new dataframe
+def add_new_row(timestamp):
+    correct_time = str(timestamp) + "+02:00"
+    # load data sets
+    sensor_data = load_sensor_data()
+
+    # Remove unwanted columns if they exist
+    sensor_data = sensor_data.drop(columns=[col for col in ['level_0', 'index'] if col in sensor_data.columns])
+
+
+    # makes crowd_flow a global variable that exists outside the function
+    global count_frame
+    # checks if crowd_flow doesn't exist
+    if "count_frame" not in globals() or set(count_frame.columns) != set(sensor_data.columns):
+        # create empty data frame
+        count_frame = pd.DataFrame(columns=sensor_data.columns)
+
+
+    # Select the matching row
+    row_data = sensor_data[sensor_data["timestamp"] == correct_time]
+    # If a matching row exists
+    if not row_data.empty:
+        # Assign the values to a new row with this timestamp as index
+        count_frame.loc[correct_time] = row_data[count_frame.columns].iloc[0]
+
+    return count_frame
