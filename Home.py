@@ -44,6 +44,10 @@ def main():
         restore_key = f"restore_scroll_{st.session_state.get('last_refresh', 0.0)}" 
         streamlit_js_eval(js_code=f"window.scrollTo(0, {st.session_state.scroll_position});",key=restore_key) # The key changes with every refresh, forcing the JS to run.
         
+    if st.session_state.get("force_refresh_home", False):
+        st.session_state.last_refresh = 0.0
+        st.session_state.force_refresh_home = False
+        st.rerun()
 
     # 2. Auto refresh  
     st_autorefresh(interval=REFRESH_INTERVAL * 1000, key="auto_refresher") #take time from refresh interval and convert to milliseconds

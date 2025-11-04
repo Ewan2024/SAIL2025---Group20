@@ -13,6 +13,7 @@ from data_loader import load_live_sensor_data
 #from security import check_login_status 
 #check_login_status()
 
+st.session_state.force_refresh_home = True
 
 # # --- Functions ---
 

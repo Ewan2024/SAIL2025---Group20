@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from Vessels_and_Car_Flow import load_vessels
 
+st.session_state.force_refresh_home = True
+
 st.set_page_config(page_title="Vessel Positions", page_icon="⛵", layout="wide")
 st.title("Vessel Positions")
 
