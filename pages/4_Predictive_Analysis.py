@@ -1,3 +1,152 @@
+import streamlit as st
+import pandas as pd
+import joblib
+from datetime import timedelta
+import plotly.graph_objects as go
+from data_loader import load_live_sensor_data
+
+#check whether user is logged in. Only then the page is loaded - only activate upon final implementation
+#from security import check_login_status 
+#check_login_status()
+
+st.title("Crowd Prediction Dashboard")
+
+# Functions
+
+def create_features(df, sensor_cols, feature_cols, 
+                    lags=[1,2,3,5,10,20,30,40,50,60,75],
+                    rolling_windows=[3,5,10,20,40,60],
+                    dropna=True):
+    df['timestamp'] = pd.to_datetime(df['timestamp'])
+    df = df.set_index('timestamp')
+    df_long = df[sensor_cols].reset_index().melt(
+        id_vars='timestamp',
+        value_vars=sensor_cols,
+        var_name='location',
+        value_name='count'
+    )
+    df_long = df_long.merge(df[feature_cols].reset_index(), on='timestamp', how='left')
+    loc_map = {loc: i for i, loc in enumerate(sensor_cols)}
+    df_long['location_id'] = df_long['location'].map(loc_map)
+    df_long = df_long.sort_values(['location_id', 'timestamp'])
+    for lag in lags:
+        df_long[f'lag_{lag}'] = df_long.groupby('location_id')['count'].shift(lag)
+    for w in rolling_windows:
+        df_long[f'roll_mean_{w}'] = df_long.groupby('location_id')['count'].rolling(w).mean().reset_index(level=0, drop=True)
+    if dropna:
+        df_long = df_long.dropna()
+    return df_long
+
+
+def recursive_forecast(model, incoming_df, sensor_cols, feature_cols,
+                       selected_sensor, current_timestamp,
+                       steps=20, interval_minutes=3):
+    forecast_results = []
+    df_future = incoming_df.copy().set_index('timestamp')
+    for step in range(1, steps + 1):
+        ts = current_timestamp + pd.Timedelta(minutes=interval_minutes * step)
+        feat_df = create_features(df_future.reset_index(), sensor_cols, feature_cols, dropna=False)
+        latest_row = feat_df[feat_df["location"] == selected_sensor].sort_values("timestamp").tail(1)
+        X_input = latest_row.drop(columns=["count", "location", "timestamp"])
+        pred_val = model.predict(X_input)[0]
+        forecast_results.append((ts, pred_val))
+        # Append prediction for next step
+        new_row = {"timestamp": ts}
+        for col in sensor_cols:
+            new_row[col] = pred_val if col == selected_sensor else df_future[col].iloc[-1]
+        for col in feature_cols:
+            new_row[col] = df_future[col].iloc[-1]
+        df_future = pd.concat([df_future.reset_index(), pd.DataFrame([new_row])], ignore_index=True)
+        df_future = df_future.set_index('timestamp')
+    return pd.DataFrame(forecast_results, columns=["timestamp", "prediction"])
+
+
+def plot_crowd_data(selected_sensor, historic_data, current_data, latest, multi_df, interval_minutes, forecast_steps):
+    # Standardized colors and line styles
+    colors = {"historic": "blue", "current": "orange", "prediction_1step": "red",
+              "prediction_multistep": "purple", "actual_future": "green"}
+    line_styles = {"historic": "solid", "current": "solid", "prediction_1step": "dash",
+                   "prediction_multistep": "dash", "actual_future": "solid"}
+
+    # Historic + current
+    hist_df = pd.DataFrame({"timestamp": historic_data.index,
+                            "value": historic_data[selected_sensor].values,
+                            "type": "historic"})
+    curr_df = pd.DataFrame({"timestamp": [current_timestamp],
+                            "value": current_data[selected_sensor].values,
+                            "type": "current"})
+    # 1-step prediction
+    # t1_timestamp = current_timestamp + pd.Timedelta(minutes=interval_minutes)
+    # t1_val = latest.loc[latest["location"] == selected_sensor, "prediction"].values[0]
+    # pred1_df = pd.DataFrame({"timestamp": [t1_timestamp], "value": [t1_val], "type": "prediction_1step"})
+
+    # Multi-step prediction
+    multi_df_plot = pd.DataFrame({"timestamp": multi_df["timestamp"],
+                                  "value": multi_df["prediction"],
+                                  "type": "prediction_multistep"})
+    # Actual future
+    future_end_time = current_timestamp + pd.Timedelta(minutes=interval_minutes * forecast_steps)
+    actual_future_df = df[(df.index > current_timestamp) & (df.index <= future_end_time)][[selected_sensor]].copy()
+    actual_future_df = actual_future_df.reset_index().rename(columns={selected_sensor: "value"})
+    actual_future_df["type"] = "actual_future"
+    # Combine all
+    plot_df = pd.concat([hist_df, curr_df, multi_df_plot, actual_future_df], ignore_index=True) #pred1_df
+    # Plot
+    fig = go.Figure()
+    for t in plot_df["type"].unique():
+        subset = plot_df[plot_df["type"] == t].sort_values("timestamp")
+        fig.add_trace(go.Scatter(x=subset["timestamp"], y=subset["value"],
+                                 mode="lines+markers", name=t,
+                                 line=dict(color=colors[t], dash=line_styles[t], width=2),
+                                 marker=dict(size=6, color=colors[t])))
+    # Zoom past 1 hour + forecast
+    one_hour_ago = current_timestamp - pd.Timedelta(hours=1)
+    fig.update_layout(title=f"Actual vs Predicted Crowd Count for {selected_sensor}",
+                      xaxis_title="Timestamp", yaxis_title="Crowd Count",
+                      legend_title="Type", template="plotly_white",
+                      xaxis=dict(range=[one_hour_ago, future_end_time]))
+    st.plotly_chart(fig, use_container_width=True)
+
+
+
+# Load model and data
+
+MODEL_DIR = 'Notebooks/crowd_count_model.pkl'
+DATA_FILE = 'data/crowd_weather_merged.csv'
+model = joblib.load(MODEL_DIR)
+df = pd.read_csv(DATA_FILE)
+df['timestamp'] = pd.to_datetime(df['timestamp'])
+df = df.set_index('timestamp')
+
+sensor_data, current_timestamp = load_live_sensor_data()
+sensor_cols = df.columns[0:-14]
+feature_cols = df.columns[-14:]
+
+# Historic / current
+historic_data = df[df.index < current_timestamp].copy()
+current_data = df[df.index == current_timestamp].copy()
+incoming_df = pd.concat([historic_data, current_data]).reset_index()
+feature_df = create_features(incoming_df.copy(), sensor_cols, feature_cols, dropna=False)
+latest = feature_df[feature_df['timestamp'] == current_timestamp].copy()
+latest["prediction"] = model.predict(latest.drop(columns=["count", "location", "timestamp"]))
+
+
+# Interactive sensor selection
+
+selected_sensor = st.selectbox("Select a sensor to view", options=sensor_cols)
+
+# Multi-step forecast
+FORECAST_STEPS = 20
+INTERVAL_MINUTES = 3
+multi_df = recursive_forecast(model, incoming_df, sensor_cols, feature_cols,
+                              selected_sensor, current_timestamp, steps=FORECAST_STEPS,
+                              interval_minutes=INTERVAL_MINUTES)
+
+# Plot
+plot_crowd_data(selected_sensor, historic_data, current_data, latest, multi_df,
+                INTERVAL_MINUTES, FORECAST_STEPS)
+
+
 # import streamlit as st
 # import pandas as pd
 # import numpy as np
@@ -412,151 +561,3 @@
 # )
 
 # st.plotly_chart(fig, use_container_width=True)
-
-import streamlit as st
-import pandas as pd
-import joblib
-from datetime import timedelta
-import plotly.graph_objects as go
-from data_loader import load_live_sensor_data
-
-#check whether user is logged in. Only then the page is loaded - only activate upon final implementation
-#from security import check_login_status 
-#check_login_status()
-
-st.title("Crowd Prediction Dashboard (Interactive)")
-
-# -----------------------------
-# Functions
-# -----------------------------
-def create_features(df, sensor_cols, feature_cols, 
-                    lags=[1,2,3,5,10,20,30,40,50,60,75],
-                    rolling_windows=[3,5,10,20,40,60],
-                    dropna=True):
-    df['timestamp'] = pd.to_datetime(df['timestamp'])
-    df = df.set_index('timestamp')
-    df_long = df[sensor_cols].reset_index().melt(
-        id_vars='timestamp',
-        value_vars=sensor_cols,
-        var_name='location',
-        value_name='count'
-    )
-    df_long = df_long.merge(df[feature_cols].reset_index(), on='timestamp', how='left')
-    loc_map = {loc: i for i, loc in enumerate(sensor_cols)}
-    df_long['location_id'] = df_long['location'].map(loc_map)
-    df_long = df_long.sort_values(['location_id', 'timestamp'])
-    for lag in lags:
-        df_long[f'lag_{lag}'] = df_long.groupby('location_id')['count'].shift(lag)
-    for w in rolling_windows:
-        df_long[f'roll_mean_{w}'] = df_long.groupby('location_id')['count'].rolling(w).mean().reset_index(level=0, drop=True)
-    if dropna:
-        df_long = df_long.dropna()
-    return df_long
-
-
-def recursive_forecast(model, incoming_df, sensor_cols, feature_cols,
-                       selected_sensor, current_timestamp,
-                       steps=20, interval_minutes=3):
-    forecast_results = []
-    df_future = incoming_df.copy().set_index('timestamp')
-    for step in range(1, steps + 1):
-        ts = current_timestamp + pd.Timedelta(minutes=interval_minutes * step)
-        feat_df = create_features(df_future.reset_index(), sensor_cols, feature_cols, dropna=False)
-        latest_row = feat_df[feat_df["location"] == selected_sensor].sort_values("timestamp").tail(1)
-        X_input = latest_row.drop(columns=["count", "location", "timestamp"])
-        pred_val = model.predict(X_input)[0]
-        forecast_results.append((ts, pred_val))
-        # Append prediction for next step
-        new_row = {"timestamp": ts}
-        for col in sensor_cols:
-            new_row[col] = pred_val if col == selected_sensor else df_future[col].iloc[-1]
-        for col in feature_cols:
-            new_row[col] = df_future[col].iloc[-1]
-        df_future = pd.concat([df_future.reset_index(), pd.DataFrame([new_row])], ignore_index=True)
-        df_future = df_future.set_index('timestamp')
-    return pd.DataFrame(forecast_results, columns=["timestamp", "prediction"])
-
-
-def plot_crowd_data(selected_sensor, historic_data, current_data, latest, multi_df, interval_minutes, forecast_steps):
-    # Standardized colors and line styles
-    colors = {"historic": "blue", "current": "orange", "prediction_1step": "red",
-              "prediction_multistep": "purple", "actual_future": "green"}
-    line_styles = {"historic": "solid", "current": "solid", "prediction_1step": "dash",
-                   "prediction_multistep": "dash", "actual_future": "solid"}
-
-    # Historic + current
-    hist_df = pd.DataFrame({"timestamp": historic_data.index,
-                            "value": historic_data[selected_sensor].values,
-                            "type": "historic"})
-    curr_df = pd.DataFrame({"timestamp": [current_timestamp],
-                            "value": current_data[selected_sensor].values,
-                            "type": "current"})
-    # 1-step prediction
-    t1_timestamp = current_timestamp + pd.Timedelta(minutes=interval_minutes)
-    t1_val = latest.loc[latest["location"] == selected_sensor, "prediction"].values[0]
-    pred1_df = pd.DataFrame({"timestamp": [t1_timestamp], "value": [t1_val], "type": "prediction_1step"})
-    # Multi-step prediction
-    multi_df_plot = pd.DataFrame({"timestamp": multi_df["timestamp"],
-                                  "value": multi_df["prediction"],
-                                  "type": "prediction_multistep"})
-    # Actual future
-    future_end_time = current_timestamp + pd.Timedelta(minutes=interval_minutes * forecast_steps)
-    actual_future_df = df[(df.index > current_timestamp) & (df.index <= future_end_time)][[selected_sensor]].copy()
-    actual_future_df = actual_future_df.reset_index().rename(columns={selected_sensor: "value"})
-    actual_future_df["type"] = "actual_future"
-    # Combine all
-    plot_df = pd.concat([hist_df, curr_df, pred1_df, multi_df_plot, actual_future_df], ignore_index=True)
-    # Plot
-    fig = go.Figure()
-    for t in plot_df["type"].unique():
-        subset = plot_df[plot_df["type"] == t].sort_values("timestamp")
-        fig.add_trace(go.Scatter(x=subset["timestamp"], y=subset["value"],
-                                 mode="lines+markers", name=t,
-                                 line=dict(color=colors[t], dash=line_styles[t], width=2),
-                                 marker=dict(size=6, color=colors[t])))
-    # Zoom past 1 hour + forecast
-    one_hour_ago = current_timestamp - pd.Timedelta(hours=1)
-    fig.update_layout(title=f"Actual vs Predicted Crowd Count for {selected_sensor}",
-                      xaxis_title="Timestamp", yaxis_title="Crowd Count",
-                      legend_title="Type", template="plotly_white",
-                      xaxis=dict(range=[one_hour_ago, future_end_time]))
-    st.plotly_chart(fig, use_container_width=True)
-
-
-# -----------------------------
-# Load model and data
-# -----------------------------
-MODEL_DIR = 'Notebooks/crowd_count_model.pkl'
-DATA_FILE = 'data/crowd_weather_merged.csv'
-model = joblib.load(MODEL_DIR)
-df = pd.read_csv(DATA_FILE)
-df['timestamp'] = pd.to_datetime(df['timestamp'])
-df = df.set_index('timestamp')
-
-sensor_data, current_timestamp = load_live_sensor_data()
-sensor_cols = df.columns[0:-14]
-feature_cols = df.columns[-14:]
-
-# Historic / current
-historic_data = df[df.index < current_timestamp].copy()
-current_data = df[df.index == current_timestamp].copy()
-incoming_df = pd.concat([historic_data, current_data]).reset_index()
-feature_df = create_features(incoming_df.copy(), sensor_cols, feature_cols, dropna=False)
-latest = feature_df[feature_df['timestamp'] == current_timestamp].copy()
-latest["prediction"] = model.predict(latest.drop(columns=["count", "location", "timestamp"]))
-
-# -----------------------------
-# Interactive sensor selection
-# -----------------------------
-selected_sensor = st.selectbox("Select a sensor to view", options=sensor_cols)
-
-# Multi-step forecast
-FORECAST_STEPS = 20
-INTERVAL_MINUTES = 3
-multi_df = recursive_forecast(model, incoming_df, sensor_cols, feature_cols,
-                              selected_sensor, current_timestamp, steps=FORECAST_STEPS,
-                              interval_minutes=INTERVAL_MINUTES)
-
-# Plot
-plot_crowd_data(selected_sensor, historic_data, current_data, latest, multi_df,
-                INTERVAL_MINUTES, FORECAST_STEPS)
