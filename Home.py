@@ -9,11 +9,11 @@ from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sens
 from calculate_crowd_flow import calculate_crowd_flow
 
 #Import function used for login - only activate upon final implementation
-#from pages.C_User_Authentification import load_user_data
-#from pages.C_User_Authentification import save_user_data
-#from pages.C_User_Authentification import hash_passwords
-#from pages.C_User_Authentification import authenticate_user
-#from pages.C_User_Authentification import login_page
+#from security import load_user_data
+#from security import save_user_data
+#from security import hash_passwords
+#from security import authenticate_user
+#from security import login_page
 
 
 st.set_page_config(

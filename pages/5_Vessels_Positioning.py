@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 from Vessels_and_Car_Flow import load_vessels
 
+#check whether user is logged in. Only then the page is loaded - only activate upon final implementation
+#from security import check_login_status 
+#check_login_status()
+
 st.set_page_config(page_title="Vessel Positions", page_icon="⛵", layout="wide")
 st.title("Vessel Positions")
 
