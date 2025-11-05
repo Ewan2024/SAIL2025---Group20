@@ -4,6 +4,8 @@ import pandas as pd
 import streamlit as st
 import pydeck as pdk
 
+st.session_state.force_refresh_home = True
+
 st.set_page_config(page_title="Car Flow — Map (auto-play, no slider)", page_icon="🗺️🚗", layout="wide")
 st.title("Car Flow — Map")
 
