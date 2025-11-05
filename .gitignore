@@ -1,2 +1,3 @@
 data/20250820163000_stream.tomtom.analyze-sail.parquet
 data/20250820163000_stream.vessel-positions-anonymized-processed.analyze-sail.parquet
+*.parquet
