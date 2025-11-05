@@ -7,3 +7,4 @@ pip install lightgbm
 pip install seaborn
 pip install tensorflow
 pip install joblit
+pip install statsmodels
