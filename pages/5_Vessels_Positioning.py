@@ -5,6 +5,8 @@ import streamlit as st
 import pydeck as pdk
 from pathlib import Path
 
+st.session_state.force_refresh_home = True
+
 st.set_page_config(page_title="Vessel Positions", page_icon="⛵", layout="wide")
 st.title("Vessel Positions")
 
