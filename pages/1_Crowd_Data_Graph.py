@@ -36,7 +36,7 @@ if "count_frame" not in st.session_state:
     st.session_state.count_frame = pd.DataFrame([first_row], columns=sensor_data.columns)
 
 
-REFRESH_INTERVAL = 10  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
+REFRESH_INTERVAL = 180  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
 
 # 1. Initialize session state on the first run
 if "last_refresh" not in st.session_state:
