@@ -15,6 +15,8 @@ from calculate_crowd_flow import add_new_row
 #from security import check_login_status 
 #check_login_status()
 
+st.session_state.force_refresh_home = True
+
 st.set_page_config(page_title="Crowd Data Line Graph", page_icon="📈", layout="wide")
 
 st.title("Crowd Data Line Graph")

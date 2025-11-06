@@ -22,7 +22,7 @@ st.set_page_config(
     page_icon="📍"
 )
 
-REFRESH_INTERVAL = 10  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
+REFRESH_INTERVAL = 180  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
 
 # 1. Initialize session state on the first run
 if "last_refresh" not in st.session_state:
@@ -44,6 +44,10 @@ def main():
         restore_key = f"restore_scroll_{st.session_state.get('last_refresh', 0.0)}" 
         streamlit_js_eval(js_code=f"window.scrollTo(0, {st.session_state.scroll_position});",key=restore_key) # The key changes with every refresh, forcing the JS to run.
         
+    if st.session_state.get("force_refresh_home", False):
+        st.session_state.last_refresh = 0.0
+        st.session_state.force_refresh_home = False
+        st.rerun()
 
     # 2. Auto refresh  
     st_autorefresh(interval=REFRESH_INTERVAL * 1000, key="auto_refresher") #take time from refresh interval and convert to milliseconds
@@ -67,7 +71,6 @@ def main():
     
 
     # toggle between data sets
-    # Initialize toggle state
     if "use_alt_data" not in st.session_state:
         st.session_state.use_alt_data = False
 

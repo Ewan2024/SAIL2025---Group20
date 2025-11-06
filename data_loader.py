@@ -47,7 +47,6 @@ def init_data_stream():
 # Load sensor locations
 
 @st.cache_data
-
 def load_sensor_data():
 
     sensor_data = pd.read_csv("data/sensor_data.csv")
@@ -56,9 +55,6 @@ def load_sensor_data():
 
 
 def load_live_sensor_data():
-    """
-    Simulates a live feed by returning the NEXT row of data from the full dataset.
-    """
     if 'full_sensor_data' not in st.session_state:
         init_data_stream()
 
