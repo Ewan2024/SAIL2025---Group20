@@ -6,6 +6,8 @@ from Vessels_and_Car_Flow import load_vessels
 #from security import check_login_status 
 #check_login_status()
 
+st.session_state.force_refresh_home = True
+
 st.set_page_config(page_title="Vessel Positions", page_icon="⛵", layout="wide")
 st.title("Vessel Positions")
 
