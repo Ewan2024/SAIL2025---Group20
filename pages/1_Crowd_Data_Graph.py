@@ -88,7 +88,7 @@ filtered_sensors = sensor_data_long[sensor_data_long["sensor_id"].isin(selected_
 
 # Plot line graph
 fig = px.line(filtered_sensors, x="timestamp", y="flow_count", color="sensor_id", title="Crowd Count")
-fig.show()
+#fig.show()
 
 fig.update_layout(xaxis_title="Time", yaxis_title="Crowd Count", legend_title="Sensor Names")
 
