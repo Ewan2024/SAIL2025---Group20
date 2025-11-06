@@ -4,6 +4,8 @@ import streamlit as st
 #from security import check_login_status 
 #check_login_status()
 
+st.session_state.force_refresh_home = True
+
 # Configure streamlit page
 st.set_page_config(
     page_title = "Settings - SAIL 2025 Dashboard",
