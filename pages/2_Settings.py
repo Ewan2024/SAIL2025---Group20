@@ -1,8 +1,8 @@
 import streamlit as st
 
 #check whether user is logged in. Only then the page is loaded - only activate upon final implementation
-#from security import check_login_status 
-#check_login_status()
+from security import check_login_status 
+check_login_status()
 
 st.session_state.force_refresh_home = True
 

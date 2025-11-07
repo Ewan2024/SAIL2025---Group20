@@ -5,6 +5,10 @@ import streamlit as st
 import pydeck as pdk
 from pathlib import Path
 
+#check whether user is logged in. Only then the page is loaded - only activate upon final implementation
+from security import check_login_status 
+check_login_status()
+
 st.session_state.force_refresh_home = True
 
 st.set_page_config(page_title="Vessel Positions", page_icon="⛵", layout="wide")

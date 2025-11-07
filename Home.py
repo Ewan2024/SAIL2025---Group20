@@ -9,11 +9,11 @@ from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sens
 from calculate_crowd_flow import calculate_crowd_flow
 
 #Import function used for login - only activate upon final implementation
-#from security import load_user_data
-#from security import save_user_data
-#from security import hash_passwords
-#from security import authenticate_user
-#from security import login_page
+from security import load_user_data
+from security import save_user_data
+from security import hash_passwords
+from security import authenticate_user
+from security import login_page
 
 
 st.set_page_config(
@@ -22,7 +22,7 @@ st.set_page_config(
     page_icon="📍"
 )
 
-REFRESH_INTERVAL = 180  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
+REFRESH_INTERVAL = 5  # 5 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
 
 # 1. Initialize session state on the first run
 if "last_refresh" not in st.session_state:
@@ -34,10 +34,10 @@ if "last_refresh" not in st.session_state:
     st.session_state.map_zoom = 13 # Default zoom when loading the map for the first time
 
 # Add authentication session state initialization - only activate upon full implementation
-#if 'logged_in' not in st.session_state:
-    #st.session_state['logged_in'] = False
-#if 'username' not in st.session_state:
-    #st.session_state['username'] = None
+if 'logged_in' not in st.session_state:
+    st.session_state['logged_in'] = False
+if 'username' not in st.session_state:
+    st.session_state['username'] = None
 
 def main():
     if "scroll_position" in st.session_state:
@@ -149,7 +149,7 @@ def main():
     time_left = REFRESH_INTERVAL - (time.time() - st.session_state.last_refresh) 
     display_time = current_timestamp if hasattr(current_timestamp, 'strftime') else st.session_state.current_timestamp
     st.header(f"Showing Data for: {display_time.strftime('%Y-%m-%d %H:%M:%S')}") #tells you what time the data is being shown
-    st.caption(f"Next automatic data refresh in {int(max(0, time_left))} seconds.") #in how long the bashboard will refresh - this updates whenn you click on the page. Could not make this happen automatically
+    
 
     st.session_state.scroll_position = streamlit_js_eval(js_code="return window.scrollY", key="get_scroll_position")
 
@@ -158,14 +158,14 @@ def main():
         st.warning(f"Skipped {len(sorted_rows)} unique row(s) due to missing data: {sorted_rows}")
 
 if __name__ == "__main__":
-    main()
+    #main()
     
     #Below is the code that adds the login functionality as a landing page - only activate upon final implementation
-    #if st.session_state['logged_in']:
+    if st.session_state['logged_in']:
         # Forward user to main dashboard (main()) if logged in 
-        #st.sidebar.button("Logout", on_click=lambda: st.session_state.update(logged_in=False, username=None))
-        #main()
-    #else:
+        st.sidebar.button("Logout", on_click=lambda: st.session_state.update(logged_in=False, username=None))
+        main()
+    else:
         # Forward user to Login/ Signup page if not logged in
-        #st.set_page_config(page_title="Login Page", layout="wide", initial_sidebar_state="collapsed")
-        #login_page()
+        st.set_page_config(page_title="Login Page", layout="wide", initial_sidebar_state="collapsed")
+        login_page()
