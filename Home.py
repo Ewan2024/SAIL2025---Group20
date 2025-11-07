@@ -8,11 +8,8 @@ from data_loader import (load_live_sensor_data, load_sensor_locations, load_tram
 from map_utils import (init_map, add_sensor_markers, add_sensor_labels, add_sensor_circles, add_flow_sensor_circles, add_sensor_arrows, add_flow_sensor_arrows, add_stops_circles, add_heatmap)
 from calculate_crowd_flow import calculate_crowd_flow
 
+
 #Import function used for login - only activate upon final implementation
-from security import load_user_data
-from security import save_user_data
-from security import hash_passwords
-from security import authenticate_user
 from security import login_page
 
 

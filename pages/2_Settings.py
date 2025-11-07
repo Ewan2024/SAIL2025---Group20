@@ -40,14 +40,10 @@ with st.form("settings_form"):
         [
             "OpenStreetMap",
             "CartoDB Positron",
-            "CartoDB Dark_Matter",
-            "Esri Satellite",
-            "Google Satellite"
+            "CartoDB Dark_Matter"
         ], index = ["OpenStreetMap",
                      "CartoDB Positron",
-                     "CartoDB Dark_Matter",
-                     "Esri Satellite",
-                     "Google Satellite"].index(st.session_state.map_style)
+                     "CartoDB Dark_Matter"].index(st.session_state.map_style)
     )
 
     st.subheader("Data Layers")

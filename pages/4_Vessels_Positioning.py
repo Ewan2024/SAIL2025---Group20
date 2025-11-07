@@ -16,7 +16,7 @@ st.title("Vessel Positions")
 
 try:
     from streamlit_autorefresh import st_autorefresh
-    st_autorefresh(interval=180_000, key="vessels_autorefresh_3min")
+    st_autorefresh(interval=5_000, key="vessels_autorefresh_3min")
 except Exception:
     pass
 
@@ -56,7 +56,7 @@ def _sniff(path_str: str):
     spd = pick(["speed-in-centimeters-per-second","speed_cm_s","speed"])
     return delim, lon, lat, tim, vid, spd
 
-@st.cache_data(ttl=0)
+#@st.cache_data(ttl=0)
 def load_latest_positions(path_str: str, file_mtime_key: float, window_minutes: int = 15) -> pd.DataFrame:
     delim, lon_c, lat_c, t_c, id_c, spd_c = _sniff(path_str)
     if not all([lon_c, lat_c, t_c, id_c]):

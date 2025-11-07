@@ -125,7 +125,7 @@ df = pd.read_csv(DATA_FILE)
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 df = df.set_index('timestamp')
 
-REFRESH_INTERVAL = 5  # seconds
+REFRESH_INTERVAL = 1  # seconds
 
 # Set up auto-refresh for THIS page
 st_autorefresh(interval=REFRESH_INTERVAL * 1000, key="predict_page_refresh")
