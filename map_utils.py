@@ -36,7 +36,6 @@ def init_map(map_style, center, zoom):
     return m
 
 # Add sensor markers if turned on
-@st.cache_data
 def add_sensor_markers(m, sensor_loc):      
     missing_rows = [] # List to store rows with missing data
     for idx, row in sensor_loc.iterrows():
@@ -57,7 +56,6 @@ def add_sensor_markers(m, sensor_loc):
     return missing_rows #to announce to user if there is data
 
 # Add sensor labels
-@st.cache_data
 def add_sensor_labels(m, sensor_loc):
     missing_rows = [] # List to store rows with missing data
     for idx, row in sensor_loc.iterrows():
@@ -103,9 +101,9 @@ def add_flow_sensor_circles(m, sensor_loc, sensor_data):
         # Map intensity to color and radius dynamically
         if sensor_count <= 1:
             color = '#00FF00'   # green (low)
-        elif sensor_count <= 5:
+        elif sensor_count <= 6:
             color = '#FFFF00'   # yellow (medium)
-        elif sensor_count <= 10:
+        elif sensor_count <= 12:
             color = '#FFA500'   # orange (high)
         else:
             color = '#FF0000'   # red (very high)
@@ -146,16 +144,16 @@ def add_sensor_circles(m, sensor_loc, sensor_data):
         #if sensor_count is None or pd.isna(sensor_count):
             #continue
         # Map intensity to color and radius dynamically
-        if sensor_count <= 20:
-            color = '#00FF00'   # green (low)
-        elif sensor_count <= 50:
+        if sensor_count <= 50:
+            color = "#05FA05"   # green (low)
+        elif sensor_count <= 100:
             color = '#FFFF00'   # yellow (medium)
-        elif sensor_count <= 80:
+        elif sensor_count <= 150:
             color = '#FFA500'   # orange (high)
         else:
             color = '#FF0000'   # red (very high)
 
-        radius = 2 + (sensor_count * 0.8) # scale radius to make differences visible
+        radius = 2 + (sensor_count * 0.2) # scale radius to make differences visible
 
         # Add circle overlay
         folium.CircleMarker(

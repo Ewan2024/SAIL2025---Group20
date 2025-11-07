@@ -12,8 +12,8 @@ from data_loader import (init_data_stream, load_live_sensor_data, load_sensor_da
 from calculate_crowd_flow import add_new_row
 
 #check whether user is logged in. Only then the page is loaded - only activate upon final implementation
-#from security import check_login_status 
-#check_login_status()
+from security import check_login_status 
+check_login_status()
 
 st.session_state.force_refresh_home = True
 
@@ -36,7 +36,7 @@ if "count_frame" not in st.session_state:
     st.session_state.count_frame = pd.DataFrame([first_row], columns=sensor_data.columns)
 
 
-REFRESH_INTERVAL = 180  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
+REFRESH_INTERVAL = 5  # 5 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
 
 # 1. Initialize session state on the first run
 if "last_refresh" not in st.session_state:
@@ -84,7 +84,7 @@ selected_options = st.sidebar.multiselect("Select sensors to display",
 
 # creates a dataset that only includes the selected sensors
 filtered_sensors = sensor_data_long[sensor_data_long["sensor_id"].isin(selected_options)]
-
+#st.write(filtered_sensors)
 
 # Plot line graph
 fig = px.line(filtered_sensors, x="timestamp", y="flow_count", color="sensor_id", title="Crowd Count")
