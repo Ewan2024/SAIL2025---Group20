@@ -2,8 +2,10 @@ import streamlit as st
 import pandas as pd
 import joblib
 from datetime import timedelta
+import time
 import plotly.graph_objects as go
 from data_loader import load_live_sensor_data
+from streamlit_autorefresh import st_autorefresh
 
 #check whether user is logged in. Only then the page is loaded - only activate upon final implementation
 from security import check_login_status 
@@ -123,7 +125,37 @@ df = pd.read_csv(DATA_FILE)
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 df = df.set_index('timestamp')
 
-sensor_data, current_timestamp = load_live_sensor_data()
+REFRESH_INTERVAL = 5  # seconds
+
+# Set up auto-refresh for THIS page
+st_autorefresh(interval=REFRESH_INTERVAL * 1000, key="predict_page_refresh")
+
+# Initialize refresh tracking
+if "last_predict_refresh" not in st.session_state:
+    st.session_state.last_predict_refresh = 0.0
+
+# Load live data every 3 minutes
+if time.time() - st.session_state.last_predict_refresh > REFRESH_INTERVAL:
+    sensor_data, current_timestamp = load_live_sensor_data()
+    st.session_state.current_timestamp_predict = current_timestamp
+    st.session_state.live_sensor_data_predict = sensor_data
+    st.session_state.last_predict_refresh = time.time()
+else:
+    # Fallback on initial values
+    if "current_timestamp_predict" not in st.session_state:
+        sensor_data, current_timestamp = load_live_sensor_data()
+        st.session_state.current_timestamp_predict = current_timestamp
+        st.session_state.live_sensor_data_predict = sensor_data
+
+# Use these consistent variables everywhere below:
+sensor_data = st.session_state.live_sensor_data_predict
+current_timestamp = st.session_state.current_timestamp_predict
+
+
+# sensor_data, current_timestamp = load_live_sensor_data()
+sensor_data = st.session_state.live_sensor_data_predict
+current_timestamp = st.session_state.current_timestamp_predict
+
 sensor_cols = df.columns[0:-14]
 feature_cols = df.columns[-14:]
 
