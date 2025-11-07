@@ -24,7 +24,7 @@ st.set_page_config(
 
 REFRESH_INTERVAL = 5  # 5 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
 
-# 1. Initialize session state on the first run
+# Initialise session state on the first run, happens when running the script for the first time
 if "last_refresh" not in st.session_state:
     init_data_stream()
     st.session_state.last_refresh = 0.0
@@ -33,7 +33,7 @@ if "last_refresh" not in st.session_state:
     st.session_state.map_center = [52.37, 4.89] # Amsterdam, this is for the first time loading the map.
     st.session_state.map_zoom = 13 # Default zoom when loading the map for the first time
 
-# Add authentication session state initialization - only activate upon full implementation
+# Add authentication session state initialisation
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
 if 'username' not in st.session_state:
@@ -49,10 +49,10 @@ def main():
         st.session_state.force_refresh_home = False
         st.rerun()
 
-    # 2. Auto refresh  
+    # Auto refresh  
     st_autorefresh(interval=REFRESH_INTERVAL * 1000, key="auto_refresher") #take time from refresh interval and convert to milliseconds
 
-    # Refresh data if the time interval has passed (3 minutes)
+    # Refresh data if the time interval has passed
     if time.time() - st.session_state.last_refresh > REFRESH_INTERVAL:
         sensor_data, timestamp = load_live_sensor_data()
         st.session_state.sensor_data = sensor_data
@@ -102,24 +102,24 @@ def main():
     st.session_state.show_sensor_labels = st.sidebar.checkbox("Show Sensor IDs", value=st.session_state.get("show_sensor_labels", False))
     st.session_state.show_tram_metro_stops = st.sidebar.checkbox("Show Tram & Metro Stops", value=st.session_state.get("show_tram_metro_stops", False))
 
-    # Create the map using the center and zoom from session state - this allows for the zoom to stay at the same level and not go back to a fixed level after a refresh
+    # Create map using the center and zoom from session state. This allows for the zoom to stay at the same level and not go back to a fixed level after a refresh
     m = init_map(
         map_style=st.session_state.map_style,
         center=st.session_state.map_center,
         zoom=st.session_state.map_zoom
     )
 
-    all_skipped_rows = set()
+    all_skipped_rows = set() #creates a set for all of the missing rows for the visualisation
 
     if st.session_state.show_sensor_data:
-        if st.session_state.use_alt_data: # run correct function with correct grading for the right dataset
+        if st.session_state.use_alt_data: 
             skipped = add_flow_sensor_circles(m, sensor_loc, display_sensor_data)
         else:
             skipped = add_sensor_circles(m, sensor_loc, display_sensor_data)
         all_skipped_rows.update(skipped)
 
     if st.session_state.show_sensor_arrows:
-        if st.session_state.use_alt_data: # run correct function with correct grading for the right dataset
+        if st.session_state.use_alt_data: 
             skipped = add_flow_sensor_arrows(m, sensor_loc, display_sensor_data)
         else:
             skipped = add_sensor_arrows(m, sensor_loc, display_sensor_data)
@@ -140,7 +140,7 @@ def main():
     if st.session_state.show_tram_metro_stops:
         add_stops_circles(m, tram_metro_stops_gpd)
 
-    map_output = st_folium(m, width=1200, height=700, key="folium_map")
+    map_output = st_folium(m, width=1200, height=700, key="folium_map") #map size and map style
 
     if map_output and map_output.get("center") and map_output.get("zoom"):
         st.session_state.map_center = map_output["center"]
@@ -151,9 +151,9 @@ def main():
     st.header(f"Showing Data for: {display_time.strftime('%Y-%m-%d %H:%M:%S')}") #tells you what time the data is being shown
     
 
-    st.session_state.scroll_position = streamlit_js_eval(js_code="return window.scrollY", key="get_scroll_position")
+    st.session_state.scroll_position = streamlit_js_eval(js_code="return window.scrollY", key="get_scroll_position") #to keep the page in the same place
 
-    if all_skipped_rows:
+    if all_skipped_rows: #shows if there is any data missing, this is the set from above
         sorted_rows = sorted(list(all_skipped_rows))
         st.warning(f"Skipped {len(sorted_rows)} unique row(s) due to missing data: {sorted_rows}")
 
