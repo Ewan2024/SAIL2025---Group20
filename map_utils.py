@@ -19,7 +19,7 @@ def init_map(map_style, center, zoom):
         tiles=None,
         control_scale=True
     )
-    # --- Add selected tile layer ---
+    #Add selected tile layer
     if map_style == "Esri Satellite":
         folium.TileLayer(
             tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -124,7 +124,7 @@ def add_flow_sensor_circles(m, sensor_loc, sensor_data):
                 Intensity: {sensor_count}
             """
         ).add_to(m)
-        # ---- Display missing rows info on Streamlit ---
+        #Display missing rows info on Streamlit
     return missing_rows
     #if missing_rows:
         #st.warning(f"Skipped {len(missing_rows)} row(s) due to missing data: {missing_rows}")
@@ -169,7 +169,7 @@ def add_sensor_circles(m, sensor_loc, sensor_data):
                 Intensity: {sensor_count}
             """
         ).add_to(m)
-        # ---- Display missing rows info on Streamlit ---
+        #Display missing rows info on Streamlit
     return missing_rows
 
 def add_sensor_arrows(m, sensor_loc, sensor_data):
