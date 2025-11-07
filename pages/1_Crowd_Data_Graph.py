@@ -15,6 +15,8 @@ from calculate_crowd_flow import add_new_row
 #from security import check_login_status 
 #check_login_status()
 
+st.session_state.force_refresh_home = True
+
 st.set_page_config(page_title="Crowd Data Line Graph", page_icon="📈", layout="wide")
 
 st.title("Crowd Data Line Graph")
@@ -34,7 +36,7 @@ if "count_frame" not in st.session_state:
     st.session_state.count_frame = pd.DataFrame([first_row], columns=sensor_data.columns)
 
 
-REFRESH_INTERVAL = 10  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
+REFRESH_INTERVAL = 180  # 180 seconds, this will be changed to milliseconds later in the code. As otherwise, this would have too many '0's'
 
 # 1. Initialize session state on the first run
 if "last_refresh" not in st.session_state:
@@ -86,7 +88,7 @@ filtered_sensors = sensor_data_long[sensor_data_long["sensor_id"].isin(selected_
 
 # Plot line graph
 fig = px.line(filtered_sensors, x="timestamp", y="flow_count", color="sensor_id", title="Crowd Count")
-fig.show()
+#fig.show()
 
 fig.update_layout(xaxis_title="Time", yaxis_title="Crowd Count", legend_title="Sensor Names")
 
