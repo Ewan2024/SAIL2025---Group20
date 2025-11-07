@@ -1,10 +1,17 @@
-pip install streamlit-folium
-pip install streamlit-autorefresh
-pip install fastparquet
-pip install scikit-learn
-pip install xgboost 
-pip install lightgbm 
-pip install seaborn
-pip install tensorflow
-pip install joblit
-pip install statsmodels
+streamlit
+pandas
+plotly
+streamlit-autorefresh
+joblib
+pydeck
+geopandas
+folium
+streamlit-folium
+streamlit-js-eval
+numpy
+fastparquet
+scikit-learn
+xgboost
+lightgbm
+seaborn
+statsmodels
