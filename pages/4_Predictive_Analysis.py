@@ -62,20 +62,21 @@ def recursive_forecast(model, incoming_df, sensor_cols, feature_cols,
 
 
 def plot_crowd_data(selected_sensor, historic_data, current_data, latest, multi_df, interval_minutes, forecast_steps):
-    # Standardized colors and line styles
+    # Standardise colors and line styles
     colors = {"historic": "blue", "current": "orange", "prediction_1step": "red",
               "prediction_multistep": "purple", "actual_future": "green"}
     line_styles = {"historic": "solid", "current": "solid", "prediction_1step": "dash",
                    "prediction_multistep": "dash", "actual_future": "solid"}
 
-    # Historic + current
+    # Historic + current dataframes
     hist_df = pd.DataFrame({"timestamp": historic_data.index,
                             "value": historic_data[selected_sensor].values,
                             "type": "historic"})
     curr_df = pd.DataFrame({"timestamp": [current_timestamp],
                             "value": current_data[selected_sensor].values,
                             "type": "current"})
-    # 1-step prediction
+    
+    # 1-step prediction (removed, as it is covered by multi-step pred)
     # t1_timestamp = current_timestamp + pd.Timedelta(minutes=interval_minutes)
     # t1_val = latest.loc[latest["location"] == selected_sensor, "prediction"].values[0]
     # pred1_df = pd.DataFrame({"timestamp": [t1_timestamp], "value": [t1_val], "type": "prediction_1step"})
@@ -84,7 +85,9 @@ def plot_crowd_data(selected_sensor, historic_data, current_data, latest, multi_
     multi_df_plot = pd.DataFrame({"timestamp": multi_df["timestamp"],
                                   "value": multi_df["prediction"],
                                   "type": "prediction_multistep"})
-    # Actual future
+    
+    # Actual future (purely to evaluate accuracy of model,
+    # future data will not be known in actual run)
     future_end_time = current_timestamp + pd.Timedelta(minutes=interval_minutes * forecast_steps)
     actual_future_df = df[(df.index > current_timestamp) & (df.index <= future_end_time)][[selected_sensor]].copy()
     actual_future_df = actual_future_df.reset_index().rename(columns={selected_sensor: "value"})
@@ -147,6 +150,7 @@ plot_crowd_data(selected_sensor, historic_data, current_data, latest, multi_df,
                 INTERVAL_MINUTES, FORECAST_STEPS)
 
 
+# (Archived Code)
 # import streamlit as st
 # import pandas as pd
 # import numpy as np
